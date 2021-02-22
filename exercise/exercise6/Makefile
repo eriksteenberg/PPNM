@@ -1,9 +1,9 @@
-#CFLAGS = `gsl-config --cflags`
+CFLAGS = `gsl-config --cflags`
 CFLAGS = $(shell gsl-config --cflags)
 LDLIBS = $(shell gsl-config --libs)
 
-erf.gnuplot.png: test.gpi
-	cat test.gpi | sed 's/pyxplot/gnuplot/' | gnuplot
+#erf.gnuplot.png: test.gpi
+#	cat test.gpi | sed 's/pyxplot/gnuplot/' | gnuplot
 
 erf.pyxplot.png: data.txt Makefile tabulated.data.txt
 	echo '\
@@ -29,8 +29,8 @@ data.txt: main
 main: main.o erf.o
 
 .PHONEY:clean
-	clean:
-		$(RM) *.o main *.png data.txt test
+	clean: 
+		$(RM) erf.o main main.o data.txt test *.png
 test:
 	echo $(CFLAGS)
 	echo $(LDLIBS)
