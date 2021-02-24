@@ -2,8 +2,9 @@ CC = gcc
 FLAGS = -O -Wall -std=gnu11
 LDLIBS = -lm
 
-out.txt: cmdline read-stdin input.txt
-	./read-stdin < input.txt > out.txt
+out.txt: cmdline read-stdin input.txt read-file
+#	./read-stdin < input.txt > out.txt
+
 input.txt:
 	seq 0 0.5 10 > input.txt
 
@@ -13,6 +14,12 @@ cmdline: cmdline.o
 read-stdin: read-stdin.o	
 	$(CC) $(CFLAGS) $^ -o $@ $(LDLIBS)	
 
+read-file: read-file.o
+	$(CC) $(LDFLAGS) $^ -o $@ $(LDLIBS)
+
+read-file.o: read-file.c
+	$(CC) $(CFLAGS) -c read-file.c -o read-file.o
+
 cmdline.o: cmdline.c
 	$(CC) $(CFLAGS) -c $< -o $@
 	
@@ -21,4 +28,4 @@ read-stdin.o: read-stdin.c
 
 .PHONEY: clean
 clean: 
-	$(RM) out.txt cmdline.o cmdline input.txt read-stdin.o	read-stdin
+	$(RM) *.txt *.o cmdline read-stdin read-file
