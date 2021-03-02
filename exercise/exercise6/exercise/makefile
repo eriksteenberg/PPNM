@@ -18,7 +18,7 @@ ln.gamma.pyxploy.png: ln.gamma.txt tabulated.lngamma.txt
         ,"$<" using 1:3 title "gsl lgamma(x)"\
         ,"$<" using 1:4 title "my lgamma(x)"\
 	,"tabulated.lngamma.txt" using 1:2 title " tabulated data"\
-        '| tee test.gpi | pyxplot i
+        '| tee test.gpi | pyxplot 
 
 gamma.pyxploy.png: gamma.txt tabulated.gamma.txt
 	echo '\
