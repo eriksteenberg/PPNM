@@ -1,7 +1,0 @@
-\
-set terminal png;\
-set output "erf.plot.png";\
-set title "error function";\
-plot \
-"erf.data.txt" using 1:2 with line\
-
