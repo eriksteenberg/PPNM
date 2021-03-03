@@ -33,7 +33,26 @@ int main(){
 	pthread_join(p3,NULL);
 	int Ninc = n1.Ninc + n2.Ninc + n3.Ninc;
 	double pi = 4 * (double)Ninc/Ntot;
-//	printf("%i %i %10g\n",Ninc,Ntot,(double)Ninc/Ntot);
-	printf("my monte carlo simulation of pi gives %g. \nThe value of pi from math.h is %g \n",pi,M_PI);
-return 0;
+	struct params n4 = {.N=Ntot/3, .Ninc=0, .seed = 5};
+	struct params n5 = {.N=Ntot/3, .Ninc=0, .seed = 15};
+	struct params n6 = {.N=Ntot/3, .Ninc=0, .seed = 1};
+#pragma omp parallel sections
+	{
+	#pragma omp section
+		{
+		my_pi((void*)&n4);
+		}
+	#pragma omp section
+		{
+		my_pi((void*)&n5);
+		}
+	#pragma omp section
+		{
+		my_pi((void*)&n6);
+		}
+	}
+	int Ninc2 = n4.Ninc + n5.Ninc+ n6.Ninc;
+	double	op_pi = 4 * (double)Ninc2/Ntot;
+	printf("My monte carlo simulation of pi gives %g. \nUsing OpemMP, I get %g\nFor reference, the value of pi from math.h is %g \n",pi,op_pi,M_PI);
+return 0;	
 }

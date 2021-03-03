@@ -22,3 +22,6 @@ main.o: main.c
 clean:
 	$(RM) main *.o *.txt
 
+test:
+	@echo $(CFLAGS) 
+	@echo $(LDLIBS)
