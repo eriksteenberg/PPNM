@@ -1,18 +1,24 @@
-CFLAGS = -Wall -Werror
-CFLAGS += $(shell gsl-config --cflags)
-#CFLAGS += -pthread
-LDLIBS += $(shell gsl-config --libs)
-LDLIBS += -lm
 CC = gcc
+CFLAGS = -Wall -Werror -O1 -std=gnu11
+CFLAGS += -pthread -fopenmp
+LDLIBS += -lm -lgomp
+LDLIBS += -pthread
+#CC = gcc
 
-out.txt: main
+default: main out.txt
 
-main:main.o
-	$(CC) $(CFALGS) $^ -o $@ $(LDLIBS)
+out.txt: main makefile
+	./$< > $@
+	cat out.txt
+
+main: main.o
+	$(CC) $(CFALGS) $< -o $@ $(LDLIBS)
 
 main.o: main.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $^ -o $@
 
+.PHONEY:clean
+.PHONEY:clean
 clean:
 	$(RM) main *.o *.txt
 
