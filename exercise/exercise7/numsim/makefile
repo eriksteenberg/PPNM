@@ -4,6 +4,7 @@ LDLIBS =  $(shell gsl-config --libs)
 CC = gcc
 
 default: result.txt erf.plot.png
+	cat result.txt
 
 erf.plot.png: erf.data.txt tabulated.erf.txt
 	echo '\
