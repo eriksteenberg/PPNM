@@ -1,0 +1,12 @@
+\
+set terminal png;\
+set output "my_erf.png";\
+set key top left;\
+set tics out;\
+set xlabel "x";\
+set ylabel "y";\
+set title "error function";\
+plot \
+"erf.data.txt" using 1:2 with line title "my\_erf(x)"\
+,"tabulated.erf.txt" using 1:2 with point title "tabulated erf points"\
+
