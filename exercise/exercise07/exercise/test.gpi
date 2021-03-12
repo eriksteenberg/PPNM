@@ -1,0 +1,14 @@
+\
+        set terminal png;\
+        set output "erf.pyxploy.png";\
+        set key top left;\
+        set tics out;\
+        set xlabel "x";\
+set ylabel "y";\
+        set title "error function";\
+        plot \
+        "erf.txt" using 1:2 with line title "math erf(x)"\
+,"erf.txt" using 1:3 title "gsl erf(x)"\
+,"erf.txt" using 1:4 title "my erf(x)"\
+,"tabulated.erf.txt" using 1:2 title " tabulated data"\
+       

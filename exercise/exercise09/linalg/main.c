@@ -77,6 +77,7 @@ int main(){
 	vector_print("Using gsl, I get that x is equal to ",x);
 	gsl_blas_dgemv(CblasNoTrans,1,B,x,0,y);
 	vector_print("A times x is ",y);
+	printf("We can thus conclude that x has the correct value\n");
 gsl_matrix_free(A);
 gsl_matrix_free(B);
 gsl_matrix_free(Acopy);
