@@ -1,0 +1,12 @@
+\
+set terminal png;\
+set output "spline.png";\
+set key bottom;\
+set tics out;\
+set xlabel "x";\
+set ylabel "y";\
+set title "spline";\
+plot \
+"out.txt" using 1:2 with point title "My spline of my function"\
+,"out.txt" using 1:3 with line title "my function"\
+

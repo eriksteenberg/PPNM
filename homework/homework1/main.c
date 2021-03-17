@@ -5,76 +5,62 @@
 #include<assert.h>
 #include<gsl/gsl_vector.h>
 #define RND (double)rand()/RAND_MAX
-/*doublel interp(int n ,double* x ,double* y ,double z){ //lige nu er det vektor men vi kan også lave rækker med  double x[]
-	assert(n>1 && z>=x[0] && z<=x[n−1]);
-	int i =0,j=n−1;
-	while( j−i>1){int m=(i+j)/2; if(z>x[m]) i=m; else j=m;}
-	assert(x[i+1]>x[i]);
-	return y[i]+(y[i+1]−y[i])/(x[i+1]-x[i])*(z-x[i])
-}
-*/
-//struct params {gsl_vector x;gsl_vector y;};
 
-double interp(double z,gsl_vector* x, gsl_vector* y){
-	assert(z>gsl_vector_get(x,0) && z<=x->size);
+int binsearch(gsl_vector* x, double z){
 	int i=0, j=x->size-1;
-	while(j-1>1){int m=(i+j)/2; if(z>gsl_vector_get(x,m)) i=m; else j=m;}
-	assert(gsl_vector_get(x,i+1)>gsl_vector_get(x,i));
-	return gsl_vector_get(y,i)+(gsl_vector_get(y,i+1)-gsl_vector_get(y,i))/(gsl_vector_get(x,i+1)-gsl_vector_get(x,i))*(z-gsl_vector_get(x,i));
+	while(j-i>1){
+		int mid=(i+j)/2;
+		if(z>gsl_vector_get(x,mid)) i=mid; else j=mid;
+		}
+	return i;
+	}
+
+double interp(gsl_vector* x, gsl_vector* y,double z){
+	int x_len = x->size;
+	assert(z>gsl_vector_get(x,0) && z<gsl_vector_get(x,x_len-1) && x_len >1);	
+	int i = binsearch(x,z);
+	double slope = (gsl_vector_get(y,i+1)-gsl_vector_get(y,i))/(gsl_vector_get(x,i+1)-gsl_vector_get(x,i));
+	double value = gsl_vector_get(y,i) + slope*(z-gsl_vector_get(x,i));
+	return value;
 }
 
-double interp_integ(double z, gsl_vector* x, gsl_vector* y){
-	double sum = 0;
-	double dx = 1.0/10;
-	for(double i=0.1;i<z;i+=dx){
-		double dsum = dx * interp(i,x,y);
-		sum+=dsum;
-	}
-	return sum;
+double linterp(gsl_vector* x, gsl_vector* y, double z){
 }
-/*void f(double z,void* arg){
-	x=p->x;
-	y=p->y;
-        assert(z>gsl_vector_get(x,0) && z<=x->size);
-        int i=0, j=x->size-1;
-        while(j-1>1){int m=(i+j)/2; if(z>gsl_vector_get(x,m)) i=m; else j=m;}
-        assert(gsl_vector_get(x,i+1)>gsl_vector_get(x,i));
-	return gsl_vector_get(y,i)+(gsl_vector_get(y,i+1)-gsl_vector_get(y,i))/(gsl_vector_get(x,i+1)-gsl_vector_get(x,i))*(z-gsl_vector_get(x,i));
+
+double interp_integ(gsl_vector* x, gsl_vector* y,double z){
+	int x_len = x->size;
+	assert(z>gsl_vector_get(x,0) && z<gsl_vector_get(x,x_len-1) && x_len >1);
+	int i = binsearch(x,z);			 
+ 	double slope = (gsl_vector_get(y,i+1)-gsl_vector_get(y,i))/(gsl_vector_get(x,i+1)-gsl_vector_get(x,i));
+	double integ = gsl_vector_get(y,i)*(z - gsl_vector_get(x,i)) + 0.5*slope*pow((z - gsl_vector_get(x,i)),2);
+	return integ;
 }
-double linterp_integ(double z,gsl_vector* x, gsl_vector* y){
-	gsl_function F;
-	F.function=&f;	
-	int limit = 999;
-	gsl_integration_workspace* w = gsl_integration_workspace_alloc(limit);
-        double a=0, b=1, acc=1e-6, eps=1e-6, result, error;
-        gsl_integration_qags(&F, a, b, acc, eps, limit, w, &result, &error);
-gsl_integration_workspace_free(w);
-	return result;
+double function(double z){
+	double z0 = 5;
+	double n = 0.5;
+	double resul = n*(2*z0*z - pow(z,2));
+	return resul;
 }
-*/
+
 int main(){
-	int n=2;
+	int n=10;
 	gsl_vector* x = gsl_vector_alloc(n);
 	gsl_vector* y = gsl_vector_alloc(n);
-	printf("Hej\n");
         for(int i=0; i< n; i++)
  		{
-		double j = (double)i/10;
+		double j = (double)i;
 		gsl_vector_set(x,i,j);
-		}
-        for(int i=0; i< n; i++)
-		{
-		double bi=RND;
+		double bi=function(j);
 		gsl_vector_set(y,i,bi);
 		}
-	double sum1 = interp_integ(2.1,x,y);
-	printf("%10g\n",sum1);
-	double b = interp(1.4,x,y);
-//	for(double i = 0.1;i<4.1;i+=1.0/8){
-//		double sum = interp_integ(i,x,y);
-//		printf("%g %g\n",i,sum);
-//		}
-gsl_vector_free(x);
-gsl_vector_free(y);
+	double  n1=9;
+	for(double i=0.1;i<n1;i+=0.1)
+	{
+		double j = (double)i;
+		double b = interp(x,y,i);
+		printf("%10g %10g %10g\n",i,b,function(i)); 
+	}
+	gsl_vector_free(x);
+	gsl_vector_free(y);
 return 0;
 }
