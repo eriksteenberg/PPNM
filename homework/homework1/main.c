@@ -32,13 +32,14 @@ double interp_integ(gsl_vector* x, gsl_vector* y,double z){
 	assert(z>gsl_vector_get(x,0) && z<gsl_vector_get(x,x_len-1) && x_len >1);
 	int i = binsearch(x,z);			 
  	double slope = (gsl_vector_get(y,i+1)-gsl_vector_get(y,i))/(gsl_vector_get(x,i+1)-gsl_vector_get(x,i));
-	double integ = gsl_vector_get(y,i)*(z - gsl_vector_get(x,i)) + 0.5*slope*pow((z - gsl_vector_get(x,i)),2);
+	double integ = gsl_vector_get(y,0)*(z - gsl_vector_get(x,0)) + 0.5*slope*pow((z - gsl_vector_get(x,0)),2);
 	return integ;
 }
 double function(double z){
 	double z0 = 5;
-	double n = 0.5;
-	double resul = n*(2*z0*z - pow(z,2));
+	double n = 1;
+	//double resul = n*(2*z0*z - pow(z,2));
+	double resul = n*(pow(z,2));
 	return resul;
 }
 
@@ -58,8 +59,10 @@ int main(){
 	{
 		double j = (double)i;
 		double b = interp(x,y,i);
-		printf("%10g %10g %10g\n",i,b,function(i)); 
+		double integ = interp_integ(x,y,i);
+		printf("%10g %10g %10g %10g\n ",i,b,function(i),integ); 
 	}
+	
 	gsl_vector_free(x);
 	gsl_vector_free(y);
 return 0;
