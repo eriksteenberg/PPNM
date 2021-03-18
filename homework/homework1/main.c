@@ -50,7 +50,8 @@ double interp_quad(gsl_vector* x, gsl_vector* y,double z){
 	double b(int i){
 		return p(i)-gsl_vector_get(c,i)*dx(i);
 	}
- 	return 	gsl_vector_get(y,i) + b(i)*(z - gsl_vector_get(x,i)) + gsl_vector_get(c,i) * pow(z - gsl_vector_get(x,i),2);
+	return gsl_vector_get(y,i) + p(i)*(z-gsl_vector_get(x,i)) + gsl_vector_get(c,i)*(z-gsl_vector_get(x,i))*(z-gsl_vector_get(x,i+1));
+// 	return 	gsl_vector_get(y,i) + b(i)*(z - gsl_vector_get(x,i)) + gsl_vector_get(c,i) * pow(z - gsl_vector_get(x,i),2);
 }
 double interp_quad_integ(gsl_vector* x, gsl_vector* y, double z){
 	int x_len = x->size;//gsl_vector_get(x,x_len-1))int x_len = x->size

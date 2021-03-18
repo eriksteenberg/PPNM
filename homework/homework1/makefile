@@ -20,9 +20,11 @@ spline.png: out.txt
 	,"$<" index 1 using 1:3 with pt 17 ps 0.25 title "interpinteg"\
 	,"$<" index 2 using 1:2 with line title "gsl interp"\
 	,"$<" index 2 using 1:3 with line title "gsl interp integrate"\
-	,"$<" index 3 using 1:2 with line title "quad interp"\
-	,"$<" index 3 using 1:3 with line title "quad interp integrate"\	
+	,"$<" index 3 using 1:2 with lt 4 ps 3 title "quad interp"\
+	,"$<" index 3 using 1:3 with pt 7 ps 4 title "quadinteg"\
 	' | tee test.gpi | pyxplot
+
+#,"$<" index 3 using 1:3 with line title "quad interp integrate"\	
 
 out.txt:main
 	./main > out.txt
