@@ -15,13 +15,14 @@ spline.png: out.txt
 	set ylabel "y";\
 	set title "spline";\
 	plot \
-         "$<" index 1 using 1:3 with line ps 0.45 title "interpinteg"\
-	,"$<" index 2 using 1:3 with line ps 0.35 title "gsl interp integrate"\
-	,"$<" index 3 using 1:2 with line ps 0.15 title "quad interp"\
-        ,"$<" index 0 using 1:2 with line ps 0.45 title "The function"\
-        ,"$<" index 1 using 1:2 with line ps 0.35 title "my interp"\
-        ,"$<" index 2 using 1:2 with line ps 0.35 title "gsl interp"\
-        ,"$<" index 2 using 1:3 with line ps 0.35 title "gsl interp integrate"\
+         "$<" index 1 using 1:3 with line lw 8 title "linear interp integ"\
+	,"$<" index 2 using 1:3 with line lw 5 title "gsl interp integrate"\
+	,"$<" index 3 using 1:3 with line lw 2 title "quad interp integ"\
+        ,"$<" index 0 using 1:2 with line lw 8 title "The function"\
+        ,"$<" index 1 using 1:2 with line lw 5 title "linear interp"\
+	,"$<" index 3 using 1:2 with line lw 3 title "quad interp"\
+        ,"$<" index 2 using 1:2 with line lw 1 title "gsl interp"\
+	,"$<" index 4 using 1:2 with line lw 5 title "quad diff"\
 	' | tee test.gpi | pyxplot
 
 out.txt:main
