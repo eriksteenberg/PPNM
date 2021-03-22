@@ -42,11 +42,11 @@ void show_vector(gsl_vector* V){
 	}
 }
 void GS_decomp(gsl_matrix* A,gsl_matrix* R){
-	assert(A->size2 == R->size1 && A->size2 == R->size2);
+	assert(A->size2 == R->size1);
 	int N = A->size1;
 	int M = A->size2;
 	gsl_matrix* Q = gsl_matrix_alloc(N,M);	
-	for(int i=0;i<M;i++){
+/*	for(int i=0;i<M;i++){
 		gsl_vector* q = gsl_vector_alloc(N);
 		gsl_matrix_get_col(q,A,i);
 		double x = gsl_blas_dnrm2(q);
@@ -64,6 +64,7 @@ void GS_decomp(gsl_matrix* A,gsl_matrix* R){
 		gsl_matrix_set_col(A,j,a);
 		}
 	}
+*/
 	for(int i=0;i<M;i++){
 		gsl_vector* a = gsl_vector_alloc(N);
 		gsl_vector* q = gsl_vector_alloc(N);
@@ -82,35 +83,60 @@ void GS_decomp(gsl_matrix* A,gsl_matrix* R){
 		}
 	}
 	gsl_matrix_memcpy(A,Q);
-//	gsl_vector_free(q);
-//	gsl_vector_free(a);
 	gsl_matrix_free(Q);
 }
 
+void matrix_multi(gsl_matrix* A, gsl_matrix* B,gsl_matrix* result){
+	gsl_blas_dgemm(CblasNoTrans, CblasNoTrans, 1.0, A,B,0.0,result);
+}
+
+void transposed_multi(gsl_matrix* A, gsl_matrix* result){
+	gsl_blas_dgemm(CblasTrans,CblasNoTrans, 1.0,A,A,0.0,result);
+	
+
+}
 int main(){
 	int N =3;
-	gsl_matrix* Q = gsl_matrix_alloc(N,N);	
-	gsl_matrix* B = gsl_matrix_alloc(N,N);	
-	gsl_matrix* R = gsl_matrix_alloc(N,N);	
+	int M =3;
+	gsl_matrix* Q = gsl_matrix_alloc(N,M);	
+	gsl_matrix* A = gsl_matrix_alloc(N,M);	
+	gsl_matrix* B = gsl_matrix_alloc(M,M);	
+	gsl_matrix* R = gsl_matrix_alloc(M,M);	
 	gsl_vector* V = gsl_vector_alloc(N);
-        for(int i=0;i<N;i++){
-    		for(int j=0;j<N;j++){
+	gsl_matrix* ATA = gsl_matrix_alloc(N,M);	
+	for(int i=0;i<N;i++){
+    		for(int j=0;j<M;j++){
 			gsl_matrix_set(Q,i,j,rnd);
 		}
 		gsl_vector_set(V,i,rnd);
 	}
+	printf("The matrix A\n");
 	show_matrix(Q);	
-	gsl_matrix_memcpy(B,Q);
-	printf("\n\n");
+	gsl_matrix_memcpy(A,Q);
+	printf("\n");
 	show_vector(V);
-	printf("\n\n");
+	printf("\n");
 	GS_decomp(Q,R);
+	printf("The matrix Q\n");
 	show_matrix(Q);	
-	printf("\n\n");
+	printf("\n");
+	printf("As we can see R is upper triangular\n");
 	show_matrix(R);	
-	printf("\n\n");
+	printf("\n");
+	matrix_multi(Q,R,ATA);	
+	printf("QR=A\n");
+	show_matrix(ATA);
+	printf("\n");
+//	gsl_matrix__memcpy(B,Q);
+	transposed_multi(Q,B);
+	printf("QTQ should give\n");
+	show_matrix(B);	
+	printf("\n");
+//--------------------------------------------	
 	gsl_matrix_free(Q);
+	gsl_matrix_free(A);
 	gsl_matrix_free(B);
+	gsl_matrix_free(ATA);
 	gsl_matrix_free(R);
 	gsl_vector_free(V);
 return 0;
