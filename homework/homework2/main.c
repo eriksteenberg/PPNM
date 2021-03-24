@@ -110,11 +110,12 @@ int main(){
 		}
 		gsl_vector_set(V,i,rnd);
 	}
+//--------------------------------------
 	printf("The matrix A\n");
-	show_matrix(Q);	
+	show_vector(V);
 	gsl_matrix_memcpy(A,Q);
 	printf("\n");
-	show_vector(V);
+	show_matrix(Q);	
 	printf("\n");
 	GS_decomp(Q,R);
 	printf("The matrix Q\n");
@@ -127,7 +128,6 @@ int main(){
 	printf("QR=A\n");
 	show_matrix(ATA);
 	printf("\n");
-//	gsl_matrix__memcpy(B,Q);
 	transposed_multi(Q,B);
 	printf("QTQ should give\n");
 	show_matrix(B);	
