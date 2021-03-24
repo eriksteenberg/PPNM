@@ -46,6 +46,7 @@ void GS_decomp(gsl_matrix* A,gsl_matrix* R){
 	int N = A->size1;
 	int M = A->size2;
 	gsl_matrix* Q = gsl_matrix_alloc(N,M);	
+
 /*	for(int i=0;i<M;i++){
 		gsl_vector* q = gsl_vector_alloc(N);
 		gsl_matrix_get_col(q,A,i);
@@ -71,6 +72,12 @@ void GS_decomp(gsl_matrix* A,gsl_matrix* R){
                 gsl_matrix_get_col(a,A,i);
 		double Rii = gsl_blas_dnrm2(a);
 		gsl_matrix_set(R,i,i,Rii);
+
+		/*		for(int k=0;k<M;k++){
+				double ak = gsl_vector_get(a,k);
+				gsl_vector_set(q,k,ak/Rii);
+			}
+*/
 		gsl_vector_memcpy(q,a);
 		gsl_vector_scale(q,1/Rii);
 		gsl_matrix_set_col(Q,i,q);
@@ -111,10 +118,10 @@ int main(){
 		gsl_vector_set(V,i,rnd);
 	}
 //--------------------------------------
-	printf("The matrix A\n");
 	show_vector(V);
 	gsl_matrix_memcpy(A,Q);
 	printf("\n");
+	printf("The matrix A\n");
 	show_matrix(Q);	
 	printf("\n");
 	GS_decomp(Q,R);
@@ -129,7 +136,7 @@ int main(){
 	show_matrix(ATA);
 	printf("\n");
 	transposed_multi(Q,B);
-	printf("QTQ should give\n");
+	printf("----QTQ----\n");
 	show_matrix(B);	
 	printf("\n");
 //--------------------------------------------	

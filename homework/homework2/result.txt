@@ -1,9 +1,9 @@
-The matrix A
 The vector looks like
 0.79844
 0.76823
 0.628871
 
+The matrix A
 The matrix looks like this
 0.840188 0.394383 0.783099 
 0.911647 0.197551 0.335223 
@@ -27,7 +27,7 @@ The matrix looks like this
 0.911647 0.197551 0.335223 
 0.277775 0.55397 0.477397 
 
-QTQ should give
+----QTQ----
 The matrix looks like this
 1 4.996e-16 -2.22045e-16 
 4.996e-16 1 -0.965554 
