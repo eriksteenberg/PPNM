@@ -1,0 +1,8 @@
+the polynomial is 4.95867*pow(x,0) -0.171379*pow(x,1) 
+The value of c1 is -0.171379 
+My estimation of the value of the half-life of ThX, based upon the least square fit, is 4.04452 days.
+The value given on wikipedia is 3.6319 days.
+
+the covariance matrix
+0.0009 -9e-05 
+-9e-05 1e-05 

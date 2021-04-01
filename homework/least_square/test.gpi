@@ -1,0 +1,14 @@
+\
+set terminal png;\
+set output "leastsquarefit.png";\
+set key top right;\
+set tics out;\
+set xlabel "x";\
+set ylabel "y";\
+set title "least square fit";\
+plot \
+"result.txt" index 0 using 1:2:3 with yerrorbars title "data points"\
+,"result.txt" index 1 using 1:2 with lines title "fit"\
+,"result.txt" index 2 using 1:2 with lines title "fit + c0 and c1 error"\
+,"result.txt" index 3 using 1:2 with lines title "fit - c0 and c1 error"\
+
