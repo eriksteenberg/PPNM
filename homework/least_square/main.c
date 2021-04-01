@@ -9,7 +9,7 @@
 #include<gsl/gsl_linalg.h>
 #include<stdio.h>
 #define rnd (double)rand()/RAND_MAX
-	//lsfit(m,f(int i,x),x,y,dy,c,S)
+
 int main(){
 	int m = 2;
 	double t[] = {1, 2, 3, 4, 6, 9, 10, 13, 15};
