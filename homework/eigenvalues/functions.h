@@ -25,6 +25,8 @@ void lsfit(int m, double f(int i, double x), gsl_vector* x, gsl_vector* y,gsl_ve
 
 void Jtimes(gsl_matrix* A, int p, int q, double theta);
 
-void timesj(gsl_matrix* A, int p, int q, double theta);
+void timesJ(gsl_matrix* A, int p, int q, double theta);
 
-int jacobi(gsl_matrix* A, gsl_matrix* V);
+int jacobi_diag(gsl_matrix* A, gsl_matrix* V);
+
+void j(gsl_matrix* A,double q,double p);
