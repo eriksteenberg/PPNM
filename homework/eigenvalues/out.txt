@@ -1,0 +1,56 @@
+Part A of this exercise, involves creating a 
+jacobian diagonalization opeartor and checking that VTV = 1,
+VTAV=D and VDVT =A
+All of which is shown below
+before jacobi, A is
+
+     0.84     0.798     0.335 
+    0.798     0.912     0.768 
+    0.335     0.768     0.278 
+
+
+After jacobi D is
+
+   -0.276         0         0 
+        0     0.269         0 
+        0         0      2.04 
+
+
+And V is
+
+    0.231     0.779     0.583 
+   -0.633    -0.334     0.698 
+    0.739     -0.53     0.416 
+
+VTV is
+
+        1         0         0 
+        0         1         0 
+        0         0         1 
+
+
+VTAV is
+
+   -0.276         0         0 
+        0     0.269         0 
+        0         0      2.04 
+
+which is equal to D
+
+   -0.276         0         0 
+        0     0.269         0 
+        0         0      2.04 
+
+
+VTDV is
+
+     0.84     0.798     0.335 
+    0.798     0.912     0.768 
+    0.335     0.768     0.278 
+
+Compared with A, which is 
+
+     0.84     0.798     0.335 
+    0.798     0.912     0.768 
+    0.335     0.768     0.278 
+
