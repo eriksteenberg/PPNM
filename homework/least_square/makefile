@@ -26,7 +26,7 @@ result.txt: main
 	cat result.txt
 
 main: main.o functions.o functions.h
-	$(CC) $(C½FLAGS) $^ -o $@ $(LDLIBS)
+	$(CC) $(CFLAGS) $^ -o $@ $(LDLIBS)
 
 main.o: main.c functions.h
 	$(CC) $(CFLAGS) -c $< -o $@

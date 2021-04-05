@@ -66,8 +66,11 @@ int main(){
 		}
 	fprintf(info,"\nThe value of c1 is %g \n",gsl_vector_get(c,1));
 	double t0 = -log(2)/gsl_vector_get(c,1);
+
+
 	fprintf(info,"My estimation of the value of the half-life of ThX, based upon the least square fit, is %g days.\nThe value given on wikipedia is %g days.\n\n",t0,3.6319);
 	fprintf(info,"the covariance matrix\n");
+
 	for(int i=0;i<m;i++){
 		for(int j=0;j<m;j++){
 		fprintf(info,"%3.g ",gsl_matrix_get(cov,i,j));
@@ -75,6 +78,7 @@ int main(){
 		fprintf(info,"\n");
 	}
 	fclose(info);	
+
 	FILE* my_result=fopen("result.txt","w");
 	fprintf(my_result,"# data points\n");
 	for(int i=0;i<n;i++){
