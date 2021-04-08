@@ -26,15 +26,15 @@ double cdot(gsl_vector* A, gsl_vector* B){
 void show_matrix(gsl_matrix* A){
 	int n = A->size1; 
 	int m = A->size2; 
-	printf("\n");
+	fprintf(stderr,"\n");
 	for(int i=0;i<n;i++){
 		for(int j=0;j<m;j++){
 			double x = gsl_matrix_get(A,i,j);
 				if(norm(x)<10e-10){	// I added this part because seeing 10-16 5 times, hurts my eyes
-					printf("%9i ",0);
+					fprintf(stderr,"%9i ",0);
 				}
 				else{
-					printf("%9.3g ",x);
+					fprintf(stderr,"%9.3g ",x);
 				}
 		}
 		printf("\n");
@@ -46,7 +46,7 @@ void show_vector(gsl_vector* V){
 	int n = V->size;
 	printf("\n");
 	for(int i=0;i<n;i++){
-		printf("%g\n",gsl_vector_get(V,i));
+		fprintf(stderr,"%g\n",gsl_vector_get(V,i));
 	}
 	printf("\n");
 }

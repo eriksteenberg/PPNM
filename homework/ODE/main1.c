@@ -13,10 +13,10 @@
 
 
 void fun(double t, gsl_vector* y, gsl_vector* dydt){
-//	gsl_vector_set(dydt,0,1);
-//	gsl_vector_set(dydt,1,1);
-	gsl_vector_set(dydt,0,gsl_vector_get(y,1)*t-0.05*pow(t,2));
-	gsl_vector_set(dydt,1,gsl_vector_get(y,0)-t +2);
+	//	gsl_vector_set(dydt,0,1);
+	//	gsl_vector_set(dydt,1,1);
+	gsl_vector_set(dydt,0,-gsl_vector_get(y,1));
+	gsl_vector_set(dydt,1,gsl_vector_get(y,0));
 }
 
 void rkstep12(void f(double t, gsl_vector* y, gsl_vector* dydt), double t0, gsl_vector* y0, double h, gsl_vector* yend, gsl_vector* yerr){
@@ -42,36 +42,47 @@ void rkstep12(void f(double t, gsl_vector* y, gsl_vector* dydt), double t0, gsl_
 }
 	//void rkstep12(void f(double t, gsl_vector* y, gsl_vector* dydt), double t0, gsl_vector* y0, double h, gsl_vector* yend, gsl_vector* yerr){
 
-void driver(void f(double t, gsl_vector* y, gsl_vector* dydt),double a,
-	double b,double h, gsl_vector* y,gsl_vector* yerr, double acc,double eps){
-
-	int n = y->size;
-	double err, normy,tol,k=a;
-	show_vector(y);
-	fprintf(stderr,"a is %g\n\n",a);
+void driver(void f(double t, gsl_vector* y, gsl_vector* dydt), double b,double h, gsl_vector* xlist, gsl_matrix* listofy , double acc, double eps){
+	int n = listofy->size1;
+	gsl_vector* yerr = gsl_vector_alloc(n);
 	gsl_vector* yb = gsl_vector_alloc(n);
-	while(k<b){
-		if(k+h>b)h=b-k;
-       		rkstep12(f,k,y,h,yb,yerr);
-		//show_vector(yb);
+	gsl_vector* y = gsl_vector_alloc(n);
+	int k = 0;
+	double x,  err, normy,tol;
+	//double s;
+	double a = gsl_vector_get(xlist, 0);//tjek
+	while(gsl_vector_get(xlist, k) < b){
+		x = gsl_vector_get(xlist, k); 
+		gsl_matrix_get_col( y, listofy, k);
+		if(x + h > b) h = b - x;
+       		rkstep12( f, x, y, h, yb, yerr);
+	//	show(vector(yb);
+//		s=0;
+//		for(int i=0;i<n;i++)s+=(gsl_vector_get(yerr,i))*(gsl_vector_get(yerr,i));
 		err = gsl_blas_dnrm2(yerr);//sqrt(s);
-	//	fprintf(stderr,"err is %g\n",err);
+		fprintf(stderr,"err is %g\n",err);
+//		s=0;
+//		for(int i=0;i<n;i++)s+=(gsl_vector_get(yb,i))*(gsl_vector_get(yb,i));
 		normy = gsl_blas_dnrm2(yb);//sqrt(s);
 		fprintf(stderr,"norm of y is %g\n",normy);
 		tol = (normy * eps + acc) * sqrt(h/(b-a));
-	//	fprintf(stderr,"err = %g < tol %g \n",err,tol);
 		if(err<tol){
-			k += h;	
-			gsl_vector_memcpy(y,yb);
+			k++;
+			gsl_vector_set(xlist,k,x+h);
+			gsl_matrix_set_col(listofy,k,yb);
+		//	show_vector(xlist);
 		}
 		if(err>0)h*= pow(tol/err,0.25)*0.95;
 		else h*=2;
 	}
+	gsl_vector_free(yerr);
 	gsl_vector_free(yb);
-	fprintf(stderr,"\n y(b) is\n");
-	show_vector(y);
+	gsl_vector_free(y);
 	}
-
+//void rkstep12(void f(double t, gsl_vector* y, gsl_vector* dydt), double t0, gsl_vector* y0, double h, gsl_vector* yend){
+//	int n = y0->size;
+//void fun1(double t, gsl_vector* y, gsl_vector* dydt){
+//void fun2(double t, gsl_vector* y, gsl_vector* dydt){
 int main(){
 	int n = 2;
 	gsl_vector* y0 = gsl_vector_alloc(n);
@@ -80,11 +91,9 @@ int main(){
 	gsl_vector* yerr = gsl_vector_alloc(n);
 	double dt = 0.1;
 	double t0 = 0;
-	
 	for(int i=0;i<n;i++){
 		gsl_vector_set(y0,i,rnd);
 	}
-	/*
 	rkstep12(fun,t0,y0,dt,yend,yerr);
 	printf("y0\n");
 	show_vector(y0);
@@ -92,12 +101,17 @@ int main(){
 	show_vector(yend);
 	printf("yerr\n");
 	show_vector(yerr);
-	*/
-	
 	double acc = 1e-6;
 	double eps = 1e-6;
 	double tend = 20;
-	driver(fun, t0, tend,dt,y0,yerr,acc,eps);
+	int m = (tend-t0)/dt;
+	fprintf(stderr,"%i\n",m);
+	gsl_vector* xlist = gsl_vector_alloc(m);
+	gsl_matrix* ylist = gsl_matrix_alloc(n,m);
+	gsl_matrix_set_col(ylist,0,y0);
+	gsl_vector_set(xlist,0,t0);
+	driver(fun, tend,dt,xlist, ylist ,acc,eps);
+//	show_matrix(ylist);
 	gsl_vector_free(y0);
 	gsl_vector_free(yend);
 	gsl_vector_free(dydt);
