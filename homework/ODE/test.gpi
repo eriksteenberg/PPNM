@@ -1,0 +1,11 @@
+\
+set terminal png;\
+set output "test.png";\
+set key top left;\
+set tics out;\
+set xlabel "x";\
+set ylabel "y";\
+set title "test--dy/dt";\
+plot \
+"result.txt" index 0 using 1:2 with line title "1 og 2"\
+

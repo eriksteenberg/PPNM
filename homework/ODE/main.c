@@ -6,17 +6,36 @@
 #include<assert.h>
 #include<gsl/gsl_linalg.h>
 #include<stdio.h>
-#include"functions.c"
 #define rnd (double)rand()/RAND_MAX
 
-//void rkstep12(void f(int n, double x, double* yx, double* dydx), int n, double x, double* yx, double h, double* yh, double* dy)
-
-
-void fun(double t, gsl_vector* y, gsl_vector* dydt){
-//	gsl_vector_set(dydt,0,1);
-//	gsl_vector_set(dydt,1,1);
-	gsl_vector_set(dydt,0,gsl_vector_get(y,1)*t-0.05*pow(t,2));
-	gsl_vector_set(dydt,1,gsl_vector_get(y,0)-t +2);
+double norm(double x){
+	double result = sqrt(pow(x,2));
+	return result;
+}
+void show_matrix(gsl_matrix* A){
+	int n = A->size1; 
+	int m = A->size2; 
+	fprintf(stderr,"\n");
+	for(int i=0;i<n;i++){
+		for(int j=0;j<m;j++){
+			double x = gsl_matrix_get(A,i,j);
+				if(norm(x)<10e-10){	// I added this part because seeing 10-16 5 times, hurts my eyes
+					fprintf(stderr,"%9i ",0);
+				}
+				else{
+					fprintf(stderr,"%9.3g ",x);
+				}
+		}
+		printf("\n");
+	}
+	printf("\n");
+}
+void show_vector(gsl_vector* V){
+	int n = V->size;
+	printf("\n");
+	for(int i=0;i<n;i++){
+		fprintf(stderr,"%g\n",gsl_vector_get(V,i));}
+	printf("\n");
 }
 
 void rkstep12(void f(double t, gsl_vector* y, gsl_vector* dydt), double t0, gsl_vector* y0, double h, gsl_vector* yend, gsl_vector* yerr){
@@ -40,38 +59,41 @@ void rkstep12(void f(double t, gsl_vector* y, gsl_vector* dydt), double t0, gsl_
 	gsl_vector_free(k0);
 	gsl_vector_free(k1);
 }
-	//void rkstep12(void f(double t, gsl_vector* y, gsl_vector* dydt), double t0, gsl_vector* y0, double h, gsl_vector* yend, gsl_vector* yerr){
 
 void driver(void f(double t, gsl_vector* y, gsl_vector* dydt),double a,
 	double b,double h, gsl_vector* y,gsl_vector* yerr, double acc,double eps){
-
+	FILE* RESULTS = fopen("result.txt","a");
 	int n = y->size;
 	double err, normy,tol,k=a;
-	show_vector(y);
-	fprintf(stderr,"a is %g\n\n",a);
 	gsl_vector* yb = gsl_vector_alloc(n);
 	while(k<b){
 		if(k+h>b)h=b-k;
        		rkstep12(f,k,y,h,yb,yerr);
-		//show_vector(yb);
-		err = gsl_blas_dnrm2(yerr);//sqrt(s);
-	//	fprintf(stderr,"err is %g\n",err);
-		normy = gsl_blas_dnrm2(yb);//sqrt(s);
-		fprintf(stderr,"norm of y is %g\n",normy);
+		err = gsl_blas_dnrm2(yerr);
+		normy = gsl_blas_dnrm2(yb);
 		tol = (normy * eps + acc) * sqrt(h/(b-a));
-	//	fprintf(stderr,"err = %g < tol %g \n",err,tol);
 		if(err<tol){
 			k += h;	
 			gsl_vector_memcpy(y,yb);
+			fprintf(RESULTS,"%3g %3g %3g\n",k,gsl_vector_get(y,0),gsl_vector_get(y,1));
 		}
 		if(err>0)h*= pow(tol/err,0.25)*0.95;
 		else h*=2;
 	}
+	fprintf(RESULTS,"\n\n");
+	fclose(RESULTS);
 	gsl_vector_free(yb);
-	fprintf(stderr,"\n y(b) is\n");
-	show_vector(y);
 	}
 
+void fun(double t, gsl_vector* y, gsl_vector* dydt){
+//	gsl_vector_set(dydt,0,3*t*t);
+//	double y1 = gsl_vector_get(y,1);	
+//	double y0 = gsl_vector_get(y,0);	
+//	gsl_vector_set(dydt,0,y1);//
+//	gsl_vector_set(dydt,1,-y0);
+	gsl_vector_set(dydt,0,gsl_vector_get(y,1));
+	gsl_vector_set(dydt,1,-gsl_vector_get(y,0));
+}
 int main(){
 	int n = 2;
 	gsl_vector* y0 = gsl_vector_alloc(n);
@@ -80,23 +102,14 @@ int main(){
 	gsl_vector* yerr = gsl_vector_alloc(n);
 	double dt = 0.1;
 	double t0 = 0;
-	
-	for(int i=0;i<n;i++){
-		gsl_vector_set(y0,i,rnd);
-	}
-	/*
-	rkstep12(fun,t0,y0,dt,yend,yerr);
-	printf("y0\n");
-	show_vector(y0);
-	printf("yend\n");
-	show_vector(yend);
-	printf("yerr\n");
-	show_vector(yerr);
-	*/
-	
-	double acc = 1e-6;
-	double eps = 1e-6;
-	double tend = 20;
+	gsl_vector_set(y0,0,0);
+	gsl_vector_set(y0,1,1);
+	double acc = 1e-1;
+	double eps = 1e-1;
+	double tend =5;
+	FILE* RESULTS = fopen("result.txt","w");
+	fprintf(RESULTS,"# index 0 : The test of x*2\n");
+	fclose(RESULTS);
 	driver(fun, t0, tend,dt,y0,yerr,acc,eps);
 	gsl_vector_free(y0);
 	gsl_vector_free(yend);
@@ -104,3 +117,4 @@ int main(){
 	gsl_vector_free(yerr);
 	return 0;
 }
+
