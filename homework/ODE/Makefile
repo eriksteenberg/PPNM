@@ -1,7 +1,7 @@
 CFLAGS = -Wall -O -std=gnu11 
 CFLAGS += $(shell /usr/bin/gsl-config --cflags)
 LDLIBS += $(shell /usr/bin/gsl-config --libs)
-CC = clang
+CC = gcc
 
 default: test.png main result.txt
 
@@ -17,9 +17,10 @@ test.png: result.txt
 	set tics out;\
 	set xlabel "x";\
 	set ylabel "y";\
-	set title "test--dy/dt";\
+	set title "uÂ´Â´=-u u(0)=0 uÂ´(0)=1";\
 	plot \
-	"$<" index 0 using 1:2 with line title "1 og 2"\
+	"$<" index 0 using 1:2 with line title "u"\
+	,"$<" index 0 using 1:3 with line title "uÂ´"\
 	' | tee test.gpi | pyxplot
 
 

@@ -42,24 +42,23 @@ void rkstep12(void f(double t, gsl_vector* y, gsl_vector* dydt), double t0, gsl_
 	int n = y0->size;	//k0 is dydt
 	gsl_vector* k0=gsl_vector_alloc(n);	//we generate dydt
 	gsl_vector* k1=gsl_vector_alloc(n);	//we generate dydt
-	gsl_vector* k2=gsl_vector_alloc(n);	//we generate dydt
+	gsl_vector* k12=gsl_vector_alloc(n);	//we generate dydt
 	f(t0,y0,k0);	//Now we calculate yend, by euler
-	gsl_vector_memcpy(k1,y0);
-	gsl_blas_daxpy(0.5*h,k0,k1);
-	f(t0+0.5*h,k1,k2);
+	gsl_vector_memcpy(k12,y0);
+	gsl_blas_daxpy(0.5*h,k0,k12);
+	f(t0+0.5*h,k12,k1);
 	for(int i=0;i<n;i++){
-		double k1i = gsl_vector_get(k2,i);
+		double k1i = gsl_vector_get(k1,i);
 		double y0i = gsl_vector_get(y0,i);
 		gsl_vector_set(yend,i,y0i+h*k1i);
 	}
 	double b1_star = 1;
 	double b2 = 1;
 	for(int i = 0;i<n;i++){
-		gsl_vector_set(yerr,i,h*(b2*gsl_vector_get(k2,i)-b1_star*gsl_vector_get(k0,i)));
+		gsl_vector_set(yerr,i,h*(b2*gsl_vector_get(k1,i)-b1_star*gsl_vector_get(k0,i)));
 		}
 	gsl_vector_free(k0);
 	gsl_vector_free(k1);
-	gsl_vector_free(k2);
 }
 
 void driver(void f(double t, gsl_vector* y, gsl_vector* dydt),double a,
@@ -77,12 +76,7 @@ void driver(void f(double t, gsl_vector* y, gsl_vector* dydt),double a,
 		if(err<tol){
 			k += h;	
 			gsl_vector_memcpy(y,yb);
-			fprintf(RESULTS,"%9g ",k);
-			for(int i=0;i<n;i++){
-				fprintf(RESULTS,"%9g ",gsl_vector_get(y,i));
-			}
-			fprintf(RESULTS,"\n");
-
+			fprintf(RESULTS,"%3g %3g %3g\n",k,gsl_vector_get(y,0),gsl_vector_get(y,1));
 		}
 		if(err>0)h*= pow(tol/err,0.25)*0.95;
 		else h*=2;
@@ -93,6 +87,11 @@ void driver(void f(double t, gsl_vector* y, gsl_vector* dydt),double a,
 	}
 
 void fun(double t, gsl_vector* y, gsl_vector* dydt){
+//	gsl_vector_set(dydt,0,3*t*t);
+//	double y1 = gsl_vector_get(y,1);	
+//	double y0 = gsl_vector_get(y,0);	
+//	gsl_vector_set(dydt,0,y1);//
+//	gsl_vector_set(dydt,1,-y0);
 	gsl_vector_set(dydt,0,gsl_vector_get(y,1));
 	gsl_vector_set(dydt,1,-gsl_vector_get(y,0));
 }
@@ -106,9 +105,9 @@ int main(){
 	double t0 = 0;
 	gsl_vector_set(y0,0,0);
 	gsl_vector_set(y0,1,1);
-	double acc = 1e-2;
-	double eps = 1e-2;
-	double tend =10;
+	double acc = 1e-1;
+	double eps = 1e-1;
+	double tend =5;
 	FILE* RESULTS = fopen("result.txt","w");
 	fprintf(RESULTS,"# index 0 : The test of x*2\n");
 	fclose(RESULTS);
