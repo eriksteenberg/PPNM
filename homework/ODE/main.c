@@ -96,12 +96,32 @@ void fun(double t, gsl_vector* y, gsl_vector* dydt){
 	gsl_vector_set(dydt,0,gsl_vector_get(y,1));
 	gsl_vector_set(dydt,1,-gsl_vector_get(y,0));
 }
+
+void SIR( double t, gsl_vector* y, gsl_vector* dydt){
+	// SIR key-values
+	double Tc = 1;
+	double Tr = 5;
+	double S = gsl_vector_get(y,0);
+	double I = gsl_vector_get(y,1);
+	double R = gsl_vector_get(y,2);
+	double N = 101 - R; // THe number of resistant people is irrelavent
+//	double R = gsl_Vector_get(y,2);
+	gsl_vector_set(dydt,0,-I*S/(N*Tc));  // S
+	gsl_vector_set(dydt,1,I*S/(N*Tc)-I/Tr);  // I 
+	gsl_vector_set(dydt,2,I/Tr);  // R
+}
 int main(){
 	int n = 2;
-	gsl_vector* y0 = gsl_vector_alloc(n);
+	int m = 3;
+	gsl_vector* y0   = gsl_vector_alloc(n);
 	gsl_vector* yend = gsl_vector_alloc(n);
 	gsl_vector* dydt = gsl_vector_alloc(n);
 	gsl_vector* yerr = gsl_vector_alloc(n);
+	//
+	gsl_vector* y01 = gsl_vector_alloc(m);
+	gsl_vector* yend1 = gsl_vector_alloc(m);
+	gsl_vector* dydt1 = gsl_vector_alloc(m);
+	gsl_vector* yerr1 = gsl_vector_alloc(m);
 	double dt = 0.1;
 	double t0 = 0;
 	gsl_vector_set(y0,0,0);
@@ -109,14 +129,39 @@ int main(){
 	double acc = 1e-2;
 	double eps = 1e-2;
 	double tend =10;
+	//fprintf(stderr,"start y0 for u''=-u is \n");
+	//show_vector(y0);
+	fprintf(stderr,"\n\n");
 	FILE* RESULTS = fopen("result.txt","w");
-	fprintf(RESULTS,"# index 0 : The test of x*2\n");
-	fclose(RESULTS);
+	fprintf(RESULTS,"\n # index 0 : The test of u''=-u\n");
+	fclose(RESULTS); 
 	driver(fun, t0, tend,dt,y0,yerr,acc,eps);
+	//fprintf(stderr,"yend for u''=-u is \n");
+	//show_vector(y0);
+	fprintf(stderr,"\n\n");
+	// The SIR initial conditions
+	gsl_vector_set(y01,0,100);
+	gsl_vector_set(y01,1,1);
+	gsl_vector_set(y01,2,0);
+//	fprintf(stderr,"SIR-model \n, the initial conditions are\n");
+//	show_vector(y01);
+	FILE* RESULTS1 = fopen("result.txt","a");
+	fprintf(RESULTS1,"\n\n# index 1 : SIR-model\n");
+	fclose(RESULTS1); 
+	double ts0 = 0;
+	double tsend = 22; 
+	double dts = 1;
+	double acc1 = 1e-2;
+	double eps1 = 1e-2;
+	driver(SIR, ts0, tsend,dts,y01,yerr1,acc1,eps1);
 	gsl_vector_free(y0);
 	gsl_vector_free(yend);
 	gsl_vector_free(dydt);
 	gsl_vector_free(yerr);
+	gsl_vector_free(y01);
+	gsl_vector_free(yend1);
+	gsl_vector_free(dydt1);
+	gsl_vector_free(yerr1);
 	return 0;
 }
 
