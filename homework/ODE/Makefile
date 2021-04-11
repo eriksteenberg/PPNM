@@ -31,7 +31,7 @@ SIR.png: result.txt
 	set tics out;\
 	set xlabel "time [days]";\
 	set ylabel "Peple";\
-	set title "The SIR-model of epidemic developement";\
+	set title "The SIR-model of epidemic developement, loosely based on Covid-19 info and the danish population with one infected";\
 	plot \
 	"$<" index 1 using 1:2 with line title "Susceptible"\
 	,"$<" index 1 using 1:3 with line title "Infectious"\

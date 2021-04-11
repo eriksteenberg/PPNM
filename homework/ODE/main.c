@@ -77,9 +77,9 @@ void driver(void f(double t, gsl_vector* y, gsl_vector* dydt),double a,
 		if(err<tol){
 			k += h;	
 			gsl_vector_memcpy(y,yb);
-			fprintf(RESULTS,"%9g ",k);
+			fprintf(RESULTS,"%11g ",k);
 			for(int i=0;i<n;i++){
-				fprintf(RESULTS,"%9g ",gsl_vector_get(y,i));
+				fprintf(RESULTS,"%11g ",(gsl_vector_get(y,i)));
 			}
 			fprintf(RESULTS,"\n");
 
@@ -99,12 +99,16 @@ void fun(double t, gsl_vector* y, gsl_vector* dydt){
 
 void SIR( double t, gsl_vector* y, gsl_vector* dydt){
 	// SIR key-values
-	double Tc = 1;
-	double Tr = 5;
+	// Note this model makes no assumption about quarantine as far as I know
+	// THe time between contact. I'm picking 7 day, becaue I have to pick something
+	double Tc = 7;
+	// On WebMD they say recovery is between 2 -14, so I'll pick 14
+	double Tr = 14;
 	double S = gsl_vector_get(y,0);
 	double I = gsl_vector_get(y,1);
 	double R = gsl_vector_get(y,2);
-	double N = 101 - R; // THe number of resistant people is irrelavent
+	double N = 5923000;// - R;
+//	double N = S + I - R; // THe number of resistant people is irrelavent
 //	double R = gsl_Vector_get(y,2);
 	gsl_vector_set(dydt,0,-I*S/(N*Tc));  // S
 	gsl_vector_set(dydt,1,I*S/(N*Tc)-I/Tr);  // I 
@@ -140,16 +144,21 @@ int main(){
 	//show_vector(y0);
 	fprintf(stderr,"\n\n");
 	// The SIR initial conditions
-	gsl_vector_set(y01,0,100);
-	gsl_vector_set(y01,1,1);
-	gsl_vector_set(y01,2,0);
+	// Accounting to wikipedia the current population is aaround 5823000. 
+	// Lets say that around 5 % have a natural immunity
+	// we'll put the initial infected at 1
+	double N = 5823000;
+	double I = 1;
+	gsl_vector_set(y01,0,N*0.9 -I);
+	gsl_vector_set(y01,1,I);
+	gsl_vector_set(y01,2,0.1*N);
 //	fprintf(stderr,"SIR-model \n, the initial conditions are\n");
 //	show_vector(y01);
 	FILE* RESULTS1 = fopen("result.txt","a");
 	fprintf(RESULTS1,"\n\n# index 1 : SIR-model\n");
 	fclose(RESULTS1); 
 	double ts0 = 0;
-	double tsend = 22; 
+	double tsend =700; 
 	double dts = 1;
 	double acc1 = 1e-2;
 	double eps1 = 1e-2;
