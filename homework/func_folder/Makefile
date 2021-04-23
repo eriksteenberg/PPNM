@@ -107,7 +107,7 @@ void SIR( double t, gsl_vector* y, gsl_vector* dydt){
 	double S = gsl_vector_get(y,0);
 	double I = gsl_vector_get(y,1);
 	double R = gsl_vector_get(y,2);
-	double N = 5823000 -R;// -(I+ R); // THe number of resistant people is irrelavent
+	double N = 5823000;// -(I+ R); // THe number of resistant people is irrelavent
 //	double R = gsl_Vector_get(y,2);
 	gsl_vector_set(dydt,0,-I*S/(N*Tc));  // S
 	gsl_vector_set(dydt,1,I*S/(N*Tc)-I/Tr);  // I 
@@ -147,7 +147,7 @@ int main(){
 	fprintf(RESULTS1,"\n\n# index 1 : SIR-model\n");
 	fclose(RESULTS1); 
 	double ts0 = 0;
-	double tsend =365; 
+	double tsend =400; 
 	double dts = 1;
 	double acc1 = 1e-4;
 	double eps1 = 1e-4;

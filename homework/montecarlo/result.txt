@@ -1,0 +1,9 @@
+a[0]=0.840188 and b[0]=0.394383
+a[1]=0.783099 and b[1]=0.79844
+a[2]=0.911647 and b[2]=0.197551
+a[3]=0.335223 and b[3]=0.76823
+the random x is 0.716354
+the random x is 0.791598
+the random x is 0.57074
+the random x is 0.607528
+mcplain gives 0.0013847 with an error of 8.49583e-05
