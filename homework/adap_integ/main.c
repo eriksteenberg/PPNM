@@ -34,7 +34,7 @@ double g(double f(double x),double x){
 	return f(y * cos(x)) * sin(x) * (B - A) / 2;	
 	}
 
-double clenshaw_curtis(double f(double x),double a, double b, double tol, double eps){
+/*double clenshaw_curtis(double f(double x),double a, double b, double tol, double eps){
 	A=a;
 	B=b;
 	double f1 = g(f,a+(b-a)/6);
@@ -48,12 +48,12 @@ double clenshaw_curtis(double f(double x),double a, double b, double tol, double
 		return U;
 	}
 	else{
-		return clenshaw_curtis(f,a,(a+b)/2,tol/sqrt(2),eps)+
+n clenshaw_curtis(f,a,(a+b)/2,tol/sqrt(2),eps)+
 			clenshaw_curtis(f,(a+b)/2,b,tol/sqrt(2),eps);	
 
 	return adap_int(f,a,b,tol,eps);
 	}
-}
+}*/
 int main(){
 	double a = 0;
 	double b = 1;	
@@ -61,7 +61,7 @@ int main(){
 	double tol = 1e-6;
 	double res = adap_int(func,a,b,tol,eps);
 	double res1 = adap_int(func2,a,b,tol,eps);
-	fprintf(stderr,"The result of the adaptive integration of sqrt(x) is %g\n and for 4*sqrt(1-x**2) it is %g\n",res,res1);
+	printf("The result of the adaptive integration of sqrt(x) is %g\n and for 4*sqrt(1-x**2) it is %g\n",res,res1);
 /*	double res2 = clenshaw_curtis(func,a,b,tol,eps);
 	double res3 = 1;//clenshaw_curtis(func2,a,b,tol,eps);
 	fprintf(stderr,"The result of the Clenshaw curtis for func1 is %g\n and for func2 is %g \n",res2,res3);

@@ -1,9 +1,8 @@
-a[0]=0.840188 and b[0]=0.394383
-a[1]=0.783099 and b[1]=0.79844
-a[2]=0.911647 and b[2]=0.197551
-a[3]=0.335223 and b[3]=0.76823
-the random x is 0.716354
-the random x is 0.791598
-the random x is 0.57074
-the random x is 0.607528
-mcplain gives 0.0013847 with an error of 8.49583e-05
+The values of the lists that we are integrating over
+a[0]=0 and b[0]=5
+mcplain integration of x**2 gives 41.6635 with an error of 0.0372656
+The values of the lists that we are integrating over
+a[0]=0 and b[0]=3.14159
+a[1]=0 and b[1]=3.14159
+a[2]=0 and b[2]=3.14159
+montecarlo plain integration  of the crazy function gives 1.66084e+06 with an error of 826553

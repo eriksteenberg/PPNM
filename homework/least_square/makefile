@@ -19,7 +19,7 @@ leastsquarefit.png: result.txt
 	,"$<" index 1 using 1:2 with lines title "fit"\
 	,"$<" index 2 using 1:2 with lines title "fit + c0 and c1 error"\
 	,"$<" index 3 using 1:2 with lines title "fit - c0 and c1 error"\
-	' | tee test.gpi | pyxplot
+		' |gnuplot
 
 result.txt: main
 	./$< > $@
