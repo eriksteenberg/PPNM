@@ -1,0 +1,39 @@
+Exercise A)
+ We calculate the extremum of the Rosenbrock's valley and Himmelblau's functions
+First we calculate Rosenbrock: 
+f(x,y) =(1-x)**2 +100*(y-x**2)**2 
+Taking two random x y values 
+0.394383
+0.783099
+
+We then use the method
+The number of steps it took to find the extremum is 14
+The method tells us that the extremum is at 
+0.999999
+0.999998
+
+Rosenbrock at the extremum is f(0.999999,0.999998)=3.2804e-12
+Then we calculate Himmelblau:
+ f(x,y)=(x**2+y-11)**2 +(x+y**2-7)**2
+ Taking another two random x y values 
+0.79844
+0.911647
+
+The number of steps it took to find the extremum is 14
+The method tells us that the extremum is at
+3
+2
+
+Himmelblau at the extremum is f(3,2)=3.35527e-13
+The gradient of the Himmel at x0 is
+0
+
+And thus we have solved A)
+Exercise B)
+The number of steps it took to find the extremum is 2
+
+124.602
+139.34
+3.09637
+
+D(H)=43.264
