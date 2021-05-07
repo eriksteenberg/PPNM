@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -O1 -std=gnu11 #'gsl-config --cflags'
+CFLAGS =  -O1 -std=gnu11 #-Wall
 CFLAGS += $(shell /usr/bin/gsl-config --cflags)
 LDLIBS += $(shell /usr/bin/gsl-config --libs)
 
@@ -16,3 +16,5 @@ main.o: main.c functions.h
 functions.o: functions.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
+clean:
+	$(RM) *.o main Results.txt

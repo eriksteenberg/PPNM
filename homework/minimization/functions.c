@@ -259,15 +259,11 @@ void quasinewton(double f(gsl_vector* xvector),gsl_vector* x, double eps,int ste
 	double fx = f(x);
 	double fxs = 0;
 	double sTg=0; 
-//	double sTy=0;
 	gradient(f,x,grad);
-	// solve DX 0 -H^-1 grad
 	int k = 0;
 	while(k<steps){
-	//	printf("k=%i\n",k);
 		k++;
 		gsl_blas_dgemv(CblasNoTrans, -1, B, grad,0,Dx); // eq(6)
-//		show_vector(Dx);
 		double lambda = 1;
 		double norm_grad = gsl_blas_dnrm2(grad);
 		if(norm_grad<DELTA*gsl_blas_dnrm2(x)){
