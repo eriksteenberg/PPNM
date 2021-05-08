@@ -1,12 +1,45 @@
-Exercise B)
-The number of steps it took to find the extremum is 9113
-Our quasinewton parameters
+Exercise A)
+ We calculate the extremum of the Rosenbrock's valley and Himmelblau's functions
+First we calculate Rosenbrock: 
+f(x,y) =(1-x)**2 +100*(y-x**2)**2 
+Taking two random x y values 
+0.394383
+0.783099
 
-103.201
-20.4797
--32.7014
+We then use the method
+Dx is within our acceptance
+The number of steps it took to find the extremum is 12
+The method tells us that the extremum is at 
+1.00011
+1.00021
 
-Higgs(H)=-0.311753
+Rosenbrock at the extremum is f(1.00011,1.00021)=4.52226e-08
+Then we calculate Himmelblau:
+ f(x,y)=(x**2+y-11)**2 +(x+y**2-7)**2
+ Taking another two random x y values 
+0.79844
+0.911647
 
+Dx is within our acceptance
+The number of steps it took to find the extremum is 11
+The method tells us that the extremum is at
+3.00017
+2.00021
+
+Himmelblau at the extremum is f(3.00017,2.00021)=2.46909e-06
+The gradient of the Himmel at x0 is
 0
 
+And thus we have solved A)
+Exercise B)
+Dx is within our acceptance
+The number of steps it took to find the extremum is 23
+Our quasinewton parameters
+
+125.972
+2.08633
+9.87621
+
+mass is 125.972188
+Higgs(H)=0.0186763
+D=26.8695

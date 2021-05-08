@@ -50,12 +50,11 @@ double D(gsl_vector* list){
 	double gamma = gsl_vector_get(list,1);
 	double A = gsl_vector_get(list,2);
 	double sum = 0;
-	int M = 29;
 	double Ei=0,sigmai=0,dsigmai=0;
 	for(int i=0;i<30;i++){
-		Ei = gsl_vector_get(E,0);
-		sigmai = gsl_vector_get(sigma,1);
-		dsigmai = gsl_vector_get(dsigma,2);
+		Ei = gsl_vector_get(E,i);
+		sigmai = gsl_vector_get(sigma,i);
+		dsigmai = gsl_vector_get(dsigma,i);
 		sum += SIGMA(Ei,m,gamma,A,sigmai,dsigmai);
 	}
 	return sum;
@@ -69,11 +68,11 @@ int main(){
 	for(int i=0;i<n;i++){
 		gsl_vector_set(x,i,RND);
 	}
-	double eps = 1e-6;
+	double eps = 1e-3;
 	int steps = 1000;
 	n = 2;
 	gsl_vector* x0 = gsl_vector_alloc(n);
-/*	printf("Exercise A)\n We calculate the extremum of the Rosenbrock's valley and Himmelblau's functions\n");
+	printf("Exercise A)\n We calculate the extremum of the Rosenbrock's valley and Himmelblau's functions\n");
 	for(int i=0;i<n;i++){
 		gsl_vector_set(x0,i,RND);
 	}
@@ -95,7 +94,7 @@ int main(){
 	printf("The gradient of the Himmel at x0 is");
 	show_vector(grad);
 	printf("And thus we have solved A)\n");
-*/	/////////////////////////////////////////////
+	/////////////////////////////////////////////
 	printf("Exercise B)\n");
 	n=30;
 	E = gsl_vector_alloc(n);
@@ -106,31 +105,40 @@ int main(){
 	double Ei=0,sigmai=0,dsigmai=0;
 	//fprintf(stderr,"importer data\n");
 	for(int i=0;i<30;i++){
-		fscanf(dataset,"%lg %lg %lg",&Ei,&sigmai,&dsigmai);
+		int dummy = fscanf(dataset,"%lg %lg %lg",&Ei,&sigmai,&dsigmai);
 		//fprintf(stderr,"%g %g %g\n",Ei,sigmai,dsigmai);
 		gsl_vector_set(sigma,i,sigmai);
 		gsl_vector_set(E,i,Ei);
 		gsl_vector_set(dsigma,i,dsigmai);
 	}
 	fclose(dataset);
-	double eps1 = 1e-3;
+	double eps1 = 1e-6;
 	steps = 10000;
 	n = 3;
 	gsl_vector* H = gsl_vector_alloc(n);
 	// 0 = m, 1 = gamma, 2 = A
-	gsl_vector_set(H,0,130);
-	gsl_vector_set(H,1,39);
+	gsl_vector_set(H,0,125);
+	gsl_vector_set(H,1,5);
 	gsl_vector_set(H,2,10);
 	quasinewton(D,H,eps1,steps);
 	printf("Our quasinewton parameters\n");
 	show_vector(H);
+	printf("mass is %.9g\n",gsl_vector_get(H,0));
 	//double Higgs(double E, double m, double gamma, double A){
 	double m = gsl_vector_get(H,0);
-	double L = gsl_vector_get(H,1);
+	double GAMMA = gsl_vector_get(H,1);
 	double A = gsl_vector_get(H,2);
-	double hej = Higgs(gsl_vector_get(E,1),m,L,A);
+	double hej = Higgs(gsl_vector_get(E,1),m,GAMMA,A);
 	printf("Higgs(H)=%g\n",hej);
-	show_vector(grad);
+	printf("D=%g\n",D(H));
+	//show_vector(grad);
+	FILE * DATA = fopen("plot.txt","w");
+	fprintf(DATA,"# - data\n");
+	for (double i =101;i<159;i+=0.1){
+		//double 
+		fprintf(DATA,"%g %g\n",i,Higgs(i,m,GAMMA,A));	
+	}
+	fclose(DATA);
 	gsl_vector_free(H);
 	gsl_vector_free(x);
 	gsl_vector_free(x0);
