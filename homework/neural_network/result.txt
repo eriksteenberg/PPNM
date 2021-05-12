@@ -1,1 +1,1 @@
-The number of steps it took to find the extremum is 10000
+The number of steps it took to find the extremum is 1000

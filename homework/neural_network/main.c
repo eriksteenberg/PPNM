@@ -72,7 +72,7 @@ void ann_train(ann* list, gsl_vector* input, gsl_vector* output){
 	gsl_vector* p = gsl_vector_alloc(N);
 	gsl_vector_memcpy(p,list->params);
 //	Cost(p);
-	quasinewton(Cost,p,1e-4,10000);
+	quasinewton(Cost,p,1e-4,1000);
 	gsl_vector_memcpy(list->params,p);
 	gsl_vector_free(p);
 	
@@ -80,10 +80,10 @@ void ann_train(ann* list, gsl_vector* input, gsl_vector* output){
 	
 
 int main(){	
-	int M = 15;
+	int N = 7;
+	int M = 3*N;
 	input = gsl_vector_alloc(M);
 	output = gsl_vector_alloc(M);
-	int N = 5;
 	network = ann_alloc(N,activation_function);
 	double a0 = -1, aN = 1;
 
@@ -101,16 +101,9 @@ int main(){
 		gsl_vector_set(network->params,1 * I ,a0 + (aN -a0)*I/(network->n-1));
 		gsl_vector_set(network->params,3 * I + 1,I);
 		gsl_vector_set(network->params,3 * I + 2,I);
-	//	fprintf(stderr,"parameter set %g \n",gsl_vector_get(network->params,3*I));
-	//	fprintf(stderr,"parameter set %g \n",gsl_vector_get(network->params,3*I+1));
-	//	fprintf(stderr,"parameter set %g \n",gsl_vector_get(network->params,3*I+2));
-	//	fprintf(stderr,"next set of paramters\n");
 	}
-	ann_train(network,input,output);
-//	show_vector(network->params);
-	//gsl_vector_memcpy(p,list->params);
+	ann_train(network,input, output);
 	FILE* DATA =  fopen("output.txt","w");
-//	FILE* DATAa =  fopen("output.txt","a");
 	fprintf(DATA,"# - data\n");
 	for(double i =a0;i<aN;i+=1.0/64){ 
 		double predicted_output = ann_response(network, i);
@@ -121,9 +114,7 @@ int main(){
 		fprintf(DATA,"%g %g\n",gsl_vector_get(input,i),gsl_vector_get(output,i));		
 	}
 	fclose(DATA);
-//	ann_free(network);
-	
-	
+	ann_free(network);
 	gsl_vector_free(input);
 	gsl_vector_free(output);
 	return 0;
