@@ -110,7 +110,7 @@ void SIR( double t, gsl_vector* y, gsl_vector* dydt){
 	double N = 5823000 -R;// -(I+ R); // THe number of resistant people is irrelavent
 //	double R = gsl_Vector_get(y,2);
 	gsl_vector_set(dydt,0,-I*S/(N*Tc));  // S
-	gsl_vector_set(dydt,1,I*S/(N*Tc)-I/Tr);  // I 
+	gsl_vector_set(dydt,1,I*S/(N*Tc)-I/Tr);  // I
 	gsl_vector_set(dydt,2,I/Tr);  // R
 }
 int main(){

@@ -25,11 +25,11 @@ void plainmc(int dim,double *a, double *b, double f(int dim, double *x),int N, d
 		sum+=fx;
 		sum2+=fx*fx;
 	}
-	double avr = sum/N, sigma2 = (sum2/N - avr*avr);
+	double mean = sum/N, sigma = sqrt(sum2/N - mean*mean);
 	//double sigma = sqrt(sum2/N - sum*sum/(N*N));	
-	fprintf(stderr,"sigma2 is %g",sigma2);
-	*result = (V) * avr;
-	*error = sqrt(sigma2/N)*V;
+	//fprintf(stderr,"sigma is %g",sigma);
+	*result = (V) * mean;
+	*error = sigma*V/sqrt(N);
 }
 
 complex plain(int dim, double f(int dim,double* x), double* a, double* b, int N){
@@ -50,6 +50,7 @@ complex plain(int dim, double f(int dim,double* x), double* a, double* b, int N)
 	complex result = mean*V + I*sigma*V/sqrt(N);
 	return result;
 }
+
 double f(int dim,double *x){
 	double sum = 0;
 	for(int i=0;i<dim;i++){
@@ -60,7 +61,7 @@ double f(int dim,double *x){
 }
 
 double f1(int dim,double *x){
-	double sum = 1/(1 - cos(x[0]) * cos(x[1]) * cos(x[2]));
+	double sum = 1/((M_PI*M_PI*M_PI)*(1 - cos(x[0]) * cos(x[1]) * cos(x[2])));
 	return sum;
 }
 
@@ -78,22 +79,18 @@ int main(){
 	int N = 1000000;
 	plainmc(k,a,b,f,N,&result,&error);
 	printf("mcplain integration of x**2 gives %g with an error of %g\n",result,error);
-	//plain(int dim, double f(int dim,double* x), double* a, double* b, int N){
-	
 	// Now we calculate that crazy equation
-	
 	int n = 3;
-	double a1[n];
-	double b1[n];
+	double a1[] = {0,0,0};
+	double b1[] = {M_PI,M_PI,M_PI};
 	printf("The values of the lists that we are integrating over\n");
 	for(int i=0;i<n;i++){
-		a1[i] = 0;
-		b1[i] = M_PI;
 		printf("a[%i]=%g and b[%i]=%g\n",i,a1[i],i,b1[i]);
 	}
 	double error1=0, result1=0;
-	int N1 = 1000000;
-	plainmc(k,a1,b1,f1,N1,&result1,&error1);
-	printf("montecarlo plain integration  of the crazy function gives %g with an error of %g\n",result1,error1);
+	int N1 = 100000;
+	plainmc(n,a1,b1,f1,N1,&result1,&error1);
+	printf("montecarlo plain integration of the crazy function gives %g with an error of %g\n",result1,error1);
+//	plain(
 	return 0;
 }

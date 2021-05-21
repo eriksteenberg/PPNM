@@ -1,1 +1,2 @@
-The number of steps it took to find the extremum is 1000
+Dx is within our acceptance
+The number of steps it took to find the extremum is 991

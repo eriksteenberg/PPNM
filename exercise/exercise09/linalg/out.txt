@@ -1,7 +1,0 @@
-b is equal to 
-      6.23       5.37       2.29 
-Using gsl, I get that x is equal to 
-   -1.1379   -2.83303   0.851459 
-A times x is 
-      6.23       5.37       2.29 
-We can thus conclude that x has the correct value

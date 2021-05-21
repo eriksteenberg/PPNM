@@ -1,3 +1,0 @@
-My monte carlo simulation of pi gives 3.14173. 
-Using OpemMP, I get 3.14166
-For reference, the value of pi from math.h is 3.14159 

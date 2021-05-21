@@ -5,4 +5,4 @@ The values of the lists that we are integrating over
 a[0]=0 and b[0]=3.14159
 a[1]=0 and b[1]=3.14159
 a[2]=0 and b[2]=3.14159
-montecarlo plain integration  of the crazy function gives 1.66084e+06 with an error of 826553
+montecarlo plain integration of the crazy function gives 1.38617 with an error of 0.023551

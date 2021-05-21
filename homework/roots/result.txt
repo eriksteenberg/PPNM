@@ -1,5 +1,5 @@
 
- First we test our root-finder og f(x)=(x-1)**2)
+First we test our root-finder og f(x)=(x-1)**2)
 Our x vector
 
 1
@@ -16,7 +16,7 @@ Our f(x) vector
 1024
 
 
- The root of the f(x) vector. It is a good sign that all the entries are 1
+The root of the f(x) vector. It is a good sign that all the entries are 1
 
 1
 1
@@ -24,9 +24,9 @@ Our f(x) vector
 1
 
 
- Now for the Test on the  Rosenbrock's valley function, f(x,y) = (1-x)**2 + 100*(y-x**2)**2,
- we search for the extremum points by applying our root finder on the derivatives of the function
-THese are randomly generated x0 and y0 values
+Now for the Test on the  Rosenbrock's valley function, f(x,y) = (1-x)**2 + 100*(y-x**2)**2,
+we search for the extremum points by applying our root finder on the derivatives of the function
+These are randomly generated x0 and y0 values
 
 0.840188
 0.394383
@@ -38,8 +38,7 @@ The return x and y values are
 
 Plucking them into the function, returns:
 
- When the derivates of a function are zero it is an extremum. SO we have found what we wanted
-
 -0
 0
 
+When the derivates of a function are zero it is an extremum. So we have found what we wanted

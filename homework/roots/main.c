@@ -85,7 +85,7 @@ int main(){
 	gsl_vector_set(x,1,-2);	
 	gsl_vector_set(x,2,27);	
 	gsl_vector_set(x,3,33);	
-	printf("\n First we test our root-finder og f(x)=(x-1)**2)\nOur x vector\n");	
+	printf("\nFirst we test our root-finder og f(x)=(x-1)**2)\nOur x vector\n");	
 	show_vector(x);
 	f(x,fx);
 	printf("\nOur f(x) vector\n");
@@ -101,9 +101,9 @@ int main(){
 	*/
 	double eps = 0.0001;
 	newton(f,x,eps);
-	printf("\n The root of the f(x) vector. It is a good sign that all the entries are 1\n");
+	printf("\nThe root of the f(x) vector. It is a good sign that all the entries are 1\n");
 	show_vector(x);
-	printf("\n Now for the Test on the  Rosenbrock's valley function, f(x,y) = (1-x)**2 + 100*(y-x**2)**2,\n we search for the extremum points by applying our root finder on the derivatives of the function\n");
+	printf("\nNow for the Test on the  Rosenbrock's valley function, f(x,y) = (1-x)**2 + 100*(y-x**2)**2,\nwe search for the extremum points by applying our root finder on the derivatives of the function\n");
 	int k = 2;
 	gsl_vector* xy = gsl_vector_alloc(k);
 	gsl_vector* fxy = gsl_vector_alloc(k);
@@ -111,15 +111,15 @@ int main(){
 	for(int i = 0;i<k;i++){
 		gsl_vector_set(xy,i,RND);
 	}
-	printf("THese are randomly generated x0 and y0 values\n");
+	printf("These are randomly generated x0 and y0 values\n");
 	show_vector(xy);
 	newton(Rosen,xy,eps);
 	printf("The return x and y values are\n");
 	show_vector(xy);
 	printf("Plucking them into the function, returns:\n");
 	Rosen(xy,fxy);
-	printf("\n When the derivates of a function are zero it is an extremum. So we have found what we wanted\n");
 	show_vector(fxy);
+	printf("When the derivates of a function are zero it is an extremum. So we have found what we wanted\n");
 	gsl_vector_free(fx);
 	gsl_vector_free(x);
 	gsl_vector_free(y);

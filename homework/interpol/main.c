@@ -17,7 +17,7 @@ int binsearch(gsl_vector* x, double z){
 }
 
 double interp(gsl_vector* x, gsl_vector* y,double z){
-	int x_len = x->size;//gsl_vector_get(x,x_len-1))int x_len = x->size
+	int x_len = x->size;
 	assert(z>=gsl_vector_get(x,0));
 	assert(z<=gsl_vector_get(x,x_len-1));
 	assert(x_len >1);	
@@ -142,7 +142,6 @@ double interp_quad_integ(gsl_vector* x, gsl_vector* y, double z){
 	double b(int i){
 		return p(i)-gsl_vector_get(c,i)*dx(i);
 	}
-//	return gsl_vector_get(y,i)*(z-gsl_vector_get(x,i)) + 0.5*b(i)*pow(z - gsl_vector_get(x,i),2) + (1/3)*gsl_vector_get(c,i)*pow(z - gsl_vector_get(x,i),3);
 	double ypart = gsl_vector_get(y,i)*(z- gsl_vector_get(x,0));
 	double bpart = b(i)*(pow(z,2) /2 - gsl_vector_get(x,i)*z -pow( gsl_vector_get(x,0),2)/2 -  gsl_vector_get(x,i)*gsl_vector_get(x,0));
 	double cpart = gsl_vector_get(c,i)*(pow(z,3)/3 - gsl_vector_get(x,i)*pow(z,2) + pow(gsl_vector_get(x,i),2)*z - pow( gsl_vector_get(x,0),3)/3 +  gsl_vector_get(x,i)* pow(gsl_vector_get(x,0),2) - pow( gsl_vector_get(x,i),2)* gsl_vector_get(x,0));
@@ -159,18 +158,13 @@ double interp_integ(gsl_vector* x, gsl_vector* y,double z){
 	return integ;
 }
 double function(double z){
-	double z0 = 10;
 	double n = 0.5;	
-	//double resul = n*(z0*z - pow(z,2));
 	double resul = n*(z);///(z+1));
 	return resul;					 								
 }
-double function1(double z){
-	return sin(z);
-}
 
 int main(){
-	int n=11;
+	int n=6;
 	gsl_interp* linear = gsl_interp_alloc(gsl_interp_linear,n);
 	gsl_vector* x = gsl_vector_alloc(n);
 	gsl_vector* y = gsl_vector_alloc(n);
@@ -184,7 +178,7 @@ int main(){
 		ya[i]=bi;
 		gsl_vector_set(y,i,bi);
 	}
-	double  n1=10;
+	double  n1=5;
 	int x_len = x->size;
 	gsl_vector_get(x,x_len-1);
 	gsl_interp_init(linear,xa,ya,n);
@@ -212,6 +206,14 @@ int main(){
 	}
 	printf("\n\n");
 	printf("# index 3: quad, first interpret and then integration\n");
+	for(int i=0; i< n; i++)
+	{
+		double j = (double)i;
+		xa[i]=j;
+		double bi=function(j);
+		ya[i]=bi;
+		gsl_vector_set(y,i,bi);
+	}
 	for(double i =0;i<n1;i+=0.1)
 	{
 		double qinterp = interp_quad(x,y,i);

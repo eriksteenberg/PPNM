@@ -15,6 +15,9 @@ void show_matrix(gsl_matrix* A){
 	for(int i=0;i<n;i++){
 		for(int j=0;j<m;j++){
 			double x = gsl_matrix_get(A,i,j);
+			if(x<10e-10){
+				x= 0;
+			}
 			printf("%9.3g ",x);
 		}
 		printf("\n");
@@ -85,11 +88,35 @@ void GS_decomp(gsl_matrix* A,gsl_matrix* R){
 		}
 	}
 }
+void GS_inv(gsl_matrix* A,gsl_matrix* Inv){
+	int n = A->size2;
+	assert(n==A->size1);
+	gsl_matrix* I = gsl_matrix_alloc(n,n);
+	gsl_matrix* R = gsl_matrix_alloc(n,n);
+	gsl_matrix* Q = gsl_matrix_alloc(n,n);
+	gsl_matrix_memcpy(Q,A);
+	gsl_matrix_set_identity(I);
+	gsl_vector* ei = gsl_vector_alloc(n);
+	gsl_vector* x = gsl_vector_alloc(n);
+	GS_decomp(Q,R);
+	for(int i = 0;i<n;i++){
+		gsl_matrix_get_col(ei,I,i);
+		GS_solve(Q,R,ei,x);
+		gsl_matrix_set_col(Inv,i,x);
+	}
+	gsl_matrix_free(I);
+	gsl_matrix_free(R);
+	gsl_matrix_free(Q);
+	gsl_vector_free(ei);
+	gsl_vector_free(x);
+}
+
+
 
 void matrix_multi(gsl_matrix* A, gsl_matrix* B,gsl_matrix* result){
-		gsl_blas_dgemm(CblasNoTrans, CblasNoTrans, 1.0, A,B,0.0,result);
+			gsl_blas_dgemm(CblasNoTrans, CblasNoTrans, 1.0, A,B,0.0,result);
 }
 
 void transposed_multi(gsl_matrix* A, gsl_matrix* result){
-		gsl_blas_dgemm(CblasTrans,CblasNoTrans, 1.0,A,A,0.0,result);
+			gsl_blas_dgemm(CblasTrans,CblasNoTrans, 1.0,A,A,0.0,result);
 }

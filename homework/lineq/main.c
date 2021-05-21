@@ -12,6 +12,7 @@
 int main(){
 	int N = 10;
 	int M = 7;
+	fprintf(stderr,"HEJ!!!!!!\n");
 	gsl_matrix* Q = gsl_matrix_alloc(N,M);	
 	gsl_matrix* A = gsl_matrix_alloc(N,M);	
 	gsl_matrix* B = gsl_matrix_alloc(M,M);	
@@ -43,6 +44,7 @@ int main(){
 	printf("----QTQ----\n");
 	show_matrix(B);	
 	printf("\n");
+	fprintf(stderr,"HEJ!!!!!!\n");
 //--------------------------------------------	
 	int N1 = 5;
 	printf("\n\n Now for GS_solve, we generate a vector b\n and a new square matrix A\n");
@@ -74,22 +76,47 @@ int main(){
 	gsl_vector* y1 = gsl_vector_alloc(N1);
 	gsl_vector* y2 = gsl_vector_alloc(N1);
 	gsl_vector* y3 = gsl_vector_alloc(N1);
+	fprintf(stderr,"hej1\n");
 	gsl_blas_dgemv(CblasNoTrans,1,T,x1,0,y1);
+	fprintf(stderr,"hej2\n");
 	gsl_blas_dgemv(CblasNoTrans,1,R1,x1,0,y2);
+	fprintf(stderr,"hej3\n");
 	gsl_blas_dgemv(CblasTrans,1,Q1,V,0,y3);
+	fprintf(stderr,"hej4\n");
 	printf("\n Ax is\n");
 	show_vector(y1);
 	printf("\n the vector b is \n");
 	show_vector(V);
 	printf("\nAs we can see, they fit\n");
-/*	show_vector(y2);
+	show_vector(y2);
 	show_vector(y3);
-*/	gsl_matrix_free(Q);
+
+	gsl_matrix* P = gsl_matrix_alloc(N1,N1);
+	gsl_matrix* I = gsl_matrix_alloc(N1,N1);
+	gsl_matrix* Pinv = gsl_matrix_alloc(N1,N1);
+	for(int i=0;i<N1;i++){
+		for(int j=0;j<N1;j++){
+			gsl_matrix_set(P,i,j,rnd);					
+		}
+	}
+	printf("\nWe now test my GS_invert void function\nThe generated matrix\n");
+	GS_inv(P, Pinv);
+	show_matrix(P);
+	printf("THe inverted matrix\n");
+	show_matrix(Pinv);
+	gsl_blas_dgemm(CblasNoTrans,CblasNoTrans,1,P,Pinv,0,I);
+	printf("The matrix product of the two matrixes gives:\n");
+	show_matrix(I);
+	printf("Which tells us that it works\n");
+	gsl_matrix_free(Q);
 	gsl_matrix_free(Q1);
 	gsl_matrix_free(R1);
 	gsl_matrix_free(T);
 	gsl_matrix_free(A);
 	gsl_matrix_free(B);
+	gsl_matrix_free(P);
+	gsl_matrix_free(I);
+	gsl_matrix_free(Pinv);
 	gsl_matrix_free(ATA);
 	gsl_matrix_free(R);
 	gsl_vector_free(V);

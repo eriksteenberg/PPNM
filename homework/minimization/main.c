@@ -120,18 +120,17 @@ int main(){
 	gsl_vector_set(H,0,125);
 	gsl_vector_set(H,1,5);
 	gsl_vector_set(H,2,10);
-	quasinewton(D,H,eps1,steps);
-	printf("Our quasinewton parameters\n");
+	printf("To find the mass and width in the data we use the quasinewton method.\nWith the initial parameters\n");
 	show_vector(H);
+	quasinewton(D,H,eps1,steps);
+	printf("After having used the method, our parameters are\n");
+	show_vector(H);
+	printf("\nWhere:\n");
 	printf("mass is %.9g\n",gsl_vector_get(H,0));
-	//double Higgs(double E, double m, double gamma, double A){
+	printf("width is %.9g\n\n",gsl_vector_get(H,1));
 	double m = gsl_vector_get(H,0);
 	double GAMMA = gsl_vector_get(H,1);
 	double A = gsl_vector_get(H,2);
-	double hej = Higgs(gsl_vector_get(E,1),m,GAMMA,A);
-	printf("Higgs(H)=%g\n",hej);
-	printf("D=%g\n",D(H));
-	//show_vector(grad);
 	FILE * DATA = fopen("plot.txt","w");
 	fprintf(DATA,"# - data\n");
 	for (double i =101;i<159;i+=0.1){

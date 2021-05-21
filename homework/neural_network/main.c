@@ -15,7 +15,7 @@ double activation_function(double x){
 }
 
 double function(double x){
-	return sin(6*x-2)*exp(-x*x);
+	return sin(5*x+2)*exp(-x*x);
 }
 
 typedef struct{
@@ -66,16 +66,12 @@ double Cost(gsl_vector* p){
 }
 
 void ann_train(ann* list, gsl_vector* input, gsl_vector* output){
-	
-	// create p
 	int N = list->params->size;
 	gsl_vector* p = gsl_vector_alloc(N);
 	gsl_vector_memcpy(p,list->params);
-//	Cost(p);
-	quasinewton(Cost,p,1e-4,1000);
+	quasinewton(Cost,p,1e-3,1000);
 	gsl_vector_memcpy(list->params,p);
 	gsl_vector_free(p);
-	
 }
 	
 

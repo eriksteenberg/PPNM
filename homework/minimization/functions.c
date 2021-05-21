@@ -267,12 +267,12 @@ void quasinewton(double f(gsl_vector* xvector),gsl_vector* x, double eps,int ste
 		double lambda = 1;
 		double norm_grad = gsl_blas_dnrm2(grad);
 		if(norm_grad<DELTA*gsl_blas_dnrm2(x)){
-			printf("The gradient is within our acceptance\nit is %g",norm_grad);
+			//printf("The gradient is within our acceptance\nit is %g",norm_grad);
 			break;
 		}
 		double norm_Dx = gsl_blas_dnrm2(Dx);
 		if(norm_Dx<eps){
-			printf("Dx is within our acceptance\n");
+			//printf("Dx is within our acceptance\n");
 			break;
 		}
 //		printf("time for lambda \n");
@@ -284,7 +284,7 @@ void quasinewton(double f(gsl_vector* xvector),gsl_vector* x, double eps,int ste
 //			printf("s is equal to \n");
 //			show_vector(s);
 			if(gsl_blas_dnrm2(s)==0){
-				printf("s is zero\n");
+				//printf("s is zero\n");
 				break;
 			}
 //			printf("lambda is equal to %g k is equal to %i\n",lambda,k);

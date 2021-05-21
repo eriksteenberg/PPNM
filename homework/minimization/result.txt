@@ -7,7 +7,6 @@ Taking two random x y values
 0.783099
 
 We then use the method
-Dx is within our acceptance
 The number of steps it took to find the extremum is 12
 The method tells us that the extremum is at 
 1.00011
@@ -20,7 +19,6 @@ Then we calculate Himmelblau:
 0.79844
 0.911647
 
-Dx is within our acceptance
 The number of steps it took to find the extremum is 11
 The method tells us that the extremum is at
 3.00017
@@ -32,14 +30,22 @@ The gradient of the Himmel at x0 is
 
 And thus we have solved A)
 Exercise B)
-Dx is within our acceptance
+To find the mass and width in the data we use the quasinewton method.
+With the initial parameters
+
+125
+5
+10
+
 The number of steps it took to find the extremum is 23
-Our quasinewton parameters
+After having used the method, our parameters are
 
 125.972
 2.08633
 9.87621
 
+
+Where:
 mass is 125.972188
-Higgs(H)=0.0186763
-D=26.8695
+width is 2.08632867
+

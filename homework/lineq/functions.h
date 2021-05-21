@@ -21,3 +21,9 @@ void matrix_multi(gsl_matrix* A, gsl_matrix* B,gsl_matrix* result);
 
 void transposed_multi(gsl_matrix* A, gsl_matrix* result);
 
+void GS_inv(gsl_matrix* A,gsl_matrix* Inv);
+
+
+void matrix_multi(gsl_matrix* A, gsl_matrix* B,gsl_matrix* result);
+
+void transposed_multi(gsl_matrix* A, gsl_matrix* result);
