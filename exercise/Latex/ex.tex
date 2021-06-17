@@ -54,8 +54,12 @@ Now lets examine the code one line at a time.\\
 for the first line, if $(x<0)$ $ex(x)=1/ex(-x)$, now mathematically, this is correct, as we note the relations given in \ref{eq:rel} $\exp(-x)=1/\exp(x)$ which mean that for $x<0$ $\exp(x)=1/\exp(-x)= \exp(-(-x))=\exp(x)$, so for $x<0$ the exponential function is an exponential function. \\
 For the second line,  if $(x>1./8)$ $\exp(x) = (\exp(x/2))^2$ again we refer to \ref{eq:rel} $\exp(x)^n=\exp(n*x)$ this means that $(\exp(x/2))^2=\exp(x)$, so for $(x>1./8)$ $\exp(x)=\exp(x)$, like the previous line.\\
 For the third line, it returns the first couple of elements in the infinite series representation of the exponential function and should thus also return the exponential function. After all it is often only necessary to include the first couple of terms to get a good representation of the function. So the functions representation of the exponential function also works. So it should work.\\
-Plotting the function versus the exponential function from the math header, we get
-\begin{figure}[h]
+%
+Before we plt the function, I have a brief comment about the second line the $(x<0) pow(ex(x/2),2);$. This is to avoid calculating the function for large values, as the exponential function normally require one to calculate the exponent of the argument given. Thus to decrease the time needed to calculate, the tricks of the exponential function are used. A small argument, that is easier to calculate, is used and then the simgle number that is calculated is then squared. \\
+On another note, there is a reason why the actually exponential function is calculate the way it is, where one term is multilpied by another term that's then multilpied by another term and so on. This is done because it is easier for the program to calculate the sum of two terms and then multiply that new term by another term then it is to calculate the value of a number to the power of $10$.\\
+%
+Plotting the function versus the exponential function from the math header we get the following.
+\begin{figure}%[h]
 	\includegraphics[width=1\textwidth]{pyxplot.pdf}
 \end{figure}
 We thus conclude that the function is a good approximation. \\

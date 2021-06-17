@@ -2,15 +2,12 @@ CFALGS = -Wall -std=gnu99
 LDLIBS = -lm
 .PHONEY: all clean
 
-all: out.txt
-	cat $<
+all: out.txt;	cat $<
 
-out.txt: main
-	./$< > $@
+out.txt: main;	./$< > $@
 
 main: main.o komplex.o
 
 main.o komplex.o: komplex.h 
 
-clean:
-	$(RM) *.o *.txt main
+clean:	;$(RM) *.o *.txt main

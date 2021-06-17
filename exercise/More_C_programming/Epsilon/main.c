@@ -34,7 +34,7 @@ int main(){
 		i--;
 	}while(i>i-1);
 	
-	printf("my min is =%i\n\npart III\n\nMachien epsilon\n",i);
+	printf("My min is =%i\n\npart III\n\nMachien epsilon\n",i);
 
 	printf("\n The double epsilon is %g\n\n",DBL_EPSILON);
 	
@@ -99,11 +99,11 @@ int main(){
 	}
 	printf("\nthe sum up float  is %f\n", sum_up_float);
 	printf("\nthe sum down float is %f\n", sum_down_float);
-	printf("\nTHe difference comes from the fact the first steps of the down flaot will be so \nsmall that it won't surpase that epsilon limit \nand will not register as changing.\nThe sum up part on the other hand will grow quickly at the beginning but \nat a certain point the additions will also be too small \nfor it to register.\n\n");
-	printf("the sum of 1/n is famously known for being divergent, but it will comverge for max as max is a finite point.\n");
+	printf("\nThe difference comes from the fact the first steps of the down flaot will be so \nsmall that it won't surpase that epsilon limit \nand will not register as changing.\nThe sum up part on the other hand will grow quickly at the beginning but \nat a certain point the additions will also be too small \nfor it to register.\n\n");
+	printf("the sum of 1/n is famously known for being divergent, but it will comverge for max as max is a finite point. It only diverges if you go to infinity.\n");
 	printf("the sum up double is %g\n", sum_up_double);
 	printf("the sum down double is %g\n", sum_down_double);
-	printf("\nTHe machine epsilon for double is really really small and since I only do %g steps the steps don't get samml enough to be ignored \nThe reason why I only use %g steps and not more is because the time to run the code began to get really long.\n\n",max1,max1);
+	printf("\nThe machine epsilon for double is really really small and since I only do %g steps the steps don't get small enough to be ignored \nThe reason why I only use %g steps and not more is because the time to run the code began to get really long.\n\n",max1,max1);
 	printf("Part 3\n\nI have implemented an equal command in equal.c \nand will now test it on two examples\n\n");
 	double a = 4;
 	double b = 5;
@@ -111,12 +111,12 @@ int main(){
 	double tau = 1;
 	double eps = 0.5;
 	int ab_diff = equal(a,b,tau,eps);
-	printf("equal(%g,%g,%g,%g)=%i\n1 means that it is within the relative equallity\n\n",a,b,tau,eps,ab_diff); //1
+	printf("equal(%g,%g,%g,%g)=%i\n1 means that the numbers are either equal within relative or absolute precision.\n\n",a,b,tau,eps,ab_diff); //1
 	eps = 0.5;
 	ab_diff = equal(a,b1,tau,eps);
-	printf("equal(%g,%g,%g,%g)=%i\n0 means that it is within the relative equallity\n\n",a,b1,tau,eps,ab_diff); //0
+	printf("equal(%g,%g,%g,%g)=%i\n0 means that it is neither within absolute nor relative precision.\n\n",a,b1,tau,eps,ab_diff); //0
 	printf("part 4\nWe test it with whether or not it can recognize 5\nIt returns:\n ");
-	name_digit(5);	
+	name_digit(5);
 	printf("\nIt could. YEASSSS!!!!!\n");
 return 0;
 }

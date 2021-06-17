@@ -1,0 +1,13 @@
+Liste over de opgaver der er lavet:
+1. Er ikke en opgave 
+2. Er fikset. Kig aldrig igen.
+3. Er fikset. Kig aldrig igen.
+4. Er fikset. Kig måske igen på Epsilon hvis du virkelig keder dig.
+5. Er fikset. Den er ldit roddet så hvis du har lyst til lidt stress så ryd lidt op.
+6. Er fikset. Hvis du har lyst til at prøve lidt 3d plots så kig igen.
+7. Er fikset. C er godt nok ikke lavet så overvej lige den.
+8. Er fikset. Hvis du får lyst kan du kigge på C og D en eller anden dag.
+9. Er fikset. Tjek om du bør lave mere på eigenvector part B delen.
+10. LaTeX er fikset.
+Summary:
+	DU kan nu stresse over de gamle afleveringer.

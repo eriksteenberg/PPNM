@@ -31,7 +31,7 @@ my min is =-2147483648
 
  do while command used
 
-my min is =-2147483648
+My min is =-2147483648
 
 part III
 
@@ -63,18 +63,18 @@ the sum up float  is 15.403683
 
 the sum down float is 16.686031
 
-THe difference comes from the fact the first steps of the down flaot will be so 
+The difference comes from the fact the first steps of the down flaot will be so 
 small that it won't surpase that epsilon limit 
 and will not register as changing.
 The sum up part on the other hand will grow quickly at the beginning but 
 at a certain point the additions will also be too small 
 for it to register.
 
-the sum of 1/n is famously known for being divergent, but it will comverge for max as max is a finite point.
+the sum of 1/n is famously known for being divergent, but it will comverge for max as max is a finite point. It only diverges if you go to infinity.
 the sum up double is 16.6953
 the sum down double is 16.6953
 
-THe machine epsilon for double is really really small and since I only do 1e+07 steps the steps don't get samml enough to be ignored 
+The machine epsilon for double is really really small and since I only do 1e+07 steps the steps don't get small enough to be ignored 
 The reason why I only use 1e+07 steps and not more is because the time to run the code began to get really long.
 
 Part 3
@@ -83,10 +83,10 @@ I have implemented an equal command in equal.c
 and will now test it on two examples
 
 equal(4,5,1,0.5)=1
-1 means that it is within the relative equallity
+1 means that the numbers are either equal within relative or absolute precision.
 
 equal(4,10,1,0.5)=0
-0 means that it is within the relative equallity
+0 means that it is neither within absolute nor relative precision.
 
 part 4
 We test it with whether or not it can recognize 5

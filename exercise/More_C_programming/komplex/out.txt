@@ -1,7 +1,9 @@
 This is the z (1,1)
 This is the y (1,-1)
 This is the x, which is the sum of z and y (2,0)
+It should be (2,0)
 This is the b which is set to (3,2)
 this is d, which is y - b (-2,-3)
+It should be (-2,-3)
 
 This complets the illustration of the komplex structure

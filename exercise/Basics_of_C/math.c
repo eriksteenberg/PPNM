@@ -22,7 +22,7 @@ int main(){
 	printf("exp(i*PI)=%g + %gi\n",creal(b),cimag(b));
 	printf("exp(i)=%g + %gi\n",creal(c),cimag(c));
 	complex f = cexp(I*pi*exp(1)*0.5);
-	printf("i**e=%g + %gi \nwhich according to eulers equation is equal to  \nexp(e*i*pi*0.5)= %g +%gi \n",creal(d),cimag(d),creal(f),cimag(f));
+	printf("i**e=%g + %gi \nAs a fact check. According to eulers equation this is equal to  \nexp(e*i*pi*0.5)= %g +%gi \n",creal(d),cimag(d),creal(f),cimag(f));
 	complex g = cexp(- pi*0.5);
 	printf("i**i=%g + %gi\nAccording to eulers equation\nIt should be equal to exp(-pi/2) = %g + %gi\n\n",creal(e),cimag(e),creal(g),cimag(g));
 	printf("------part 2------\n\n");

@@ -9,10 +9,12 @@ int main(){
 	komplex_print("This is the z",z);
 	komplex_print("This is the y",y);
 	komplex_print("This is the x, which is the sum of z and y",x);
+	printf("It should be (2,0)\n");
 	komplex b = komplex_new(3,2);
 	komplex_print("This is the b which is set to",b);
 	komplex d = komplex_sub(y,b);
 	komplex_print("this is d, which is y - b",d);
+	printf("It should be (-2,-3)\n");
 	printf("\nThis complets the illustration of the komplex structure\n");
 	return 0;
 }

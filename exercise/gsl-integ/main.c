@@ -40,5 +40,6 @@ int main(){
 		fprintf(erf_plot,"%10g %10g\n",z,erf(z));
 	}
 fclose(erf_plot);
+	printf("\nI also made Exercise B.\n");
 return 0;
 }

@@ -1,0 +1,46 @@
+Our Matrix A is equal to
+
+     6.13      -2.9      5.86 
+     8.08     -6.31     -3.89 
+    -4.36         1      0.19 
+
+
+b is equal to 
+      6.23 
+      5.37 
+      2.29 
+
+Using gsl, I get that x is equal to 
+   -1.1379 
+  -2.83303 
+  0.851459 
+
+A times x is 
+      6.23 
+      5.37 
+      2.29 
+
+We can thus conclude that x has the correct value
+
+
+Part B. Check if you are permitted to GSL or
+
+        1       0.5     0.333      0.25 
+      0.5     0.333      0.25       0.2 
+    0.333      0.25       0.2     0.167 
+     0.25       0.2     0.167     0.143 
+
+This is the vector where the eigenvalues are stored
+   1.50021 
+  0.169141 
+0.00673827 
+9.67023e-05 
+
+
+Matrix storing the eigenvectors in the collumns
+
+    0.793     0.582    -0.179   -0.0292 
+    0.452    -0.371     0.742     0.329 
+    0.322     -0.51      -0.1    -0.791 
+    0.252    -0.514    -0.638     0.515 
+
