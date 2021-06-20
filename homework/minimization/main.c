@@ -126,8 +126,9 @@ int main(){
 	printf("After having used the method, our parameters are\n");
 	show_vector(H);
 	printf("\nWhere:\n");
-	printf("mass is %.9g\n",gsl_vector_get(H,0));
-	printf("width is %.9g\n\n",gsl_vector_get(H,1));
+	printf("The mass is %.9g\n",gsl_vector_get(H,0));
+	printf("The width of the resonance is %.9g\n",gsl_vector_get(H,1));
+	printf("The scaling-factor is %.9g\n\n",gsl_vector_get(H,2));
 	double m = gsl_vector_get(H,0);
 	double GAMMA = gsl_vector_get(H,1);
 	double A = gsl_vector_get(H,2);

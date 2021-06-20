@@ -10,8 +10,8 @@
 #include<stdio.h>
 #define rnd (double)rand()/RAND_MAX
 int main(){
-	int N = 10;
-	int M = 7;
+	int N = 6;
+	int M = 4;
 	fprintf(stderr,"HEJ!!!!!!\n");
 	gsl_matrix* Q = gsl_matrix_alloc(N,M);	
 	gsl_matrix* A = gsl_matrix_alloc(N,M);	
@@ -69,28 +69,28 @@ int main(){
 	show_matrix(Q1);
 	printf("\nThe R-matrix\n");
 	show_matrix(R1);
-	printf("\nAnd now We solve it\n");
+	printf("\nAnd now We solve QRx=b for x, whcih gives\n");
 	GS_solve(Q1,R1,V,x1);
 	show_vector(x1);
 	printf("checking Ax=b\n");
 	gsl_vector* y1 = gsl_vector_alloc(N1);
-	gsl_vector* y2 = gsl_vector_alloc(N1);
-	gsl_vector* y3 = gsl_vector_alloc(N1);
-	fprintf(stderr,"hej1\n");
 	gsl_blas_dgemv(CblasNoTrans,1,T,x1,0,y1);
-	fprintf(stderr,"hej2\n");
-	gsl_blas_dgemv(CblasNoTrans,1,R1,x1,0,y2);
-	fprintf(stderr,"hej3\n");
-	gsl_blas_dgemv(CblasTrans,1,Q1,V,0,y3);
-	fprintf(stderr,"hej4\n");
 	printf("\n Ax is\n");
 	show_vector(y1);
 	printf("\n the vector b is \n");
 	show_vector(V);
 	printf("\nAs we can see, they fit\n");
+	/*
+	THis is here in case I want to check what Rx and Q^Tv. I think.
+	gsl_vector* y2 = gsl_vector_alloc(N1);
+	gsl_vector* y3 = gsl_vector_alloc(N1);
+	gsl_blas_dgemv(CblasNoTrans,1,R1,x1,0,y2);
+	gsl_blas_dgemv(CblasTrans,1,Q1,V,0,y3);
+	
 	show_vector(y2);
 	show_vector(y3);
 
+	*/
 	gsl_matrix* P = gsl_matrix_alloc(N1,N1);
 	gsl_matrix* I = gsl_matrix_alloc(N1,N1);
 	gsl_matrix* Pinv = gsl_matrix_alloc(N1,N1);
@@ -102,12 +102,12 @@ int main(){
 	printf("\nWe now test my GS_invert void function\nThe generated matrix\n");
 	GS_inv(P, Pinv);
 	show_matrix(P);
-	printf("THe inverted matrix\n");
+	printf("\nTHe inverted matrix\n");
 	show_matrix(Pinv);
 	gsl_blas_dgemm(CblasNoTrans,CblasNoTrans,1,P,Pinv,0,I);
-	printf("The matrix product of the two matrixes gives:\n");
+	printf("\nThe matrix product of the two matrixes gives:\n");
 	show_matrix(I);
-	printf("Which tells us that it works\n");
+	printf("\nWhich tells us that it works\n");
 	gsl_matrix_free(Q);
 	gsl_matrix_free(Q1);
 	gsl_matrix_free(R1);
@@ -121,8 +121,8 @@ int main(){
 	gsl_matrix_free(R);
 	gsl_vector_free(V);
 	gsl_vector_free(y1);
-	gsl_vector_free(y2);
-	gsl_vector_free(y3);
+	//gsl_vector_free(y2);
+	//gsl_vector_free(y3);
 	gsl_vector_free(x1);
 return 0;
 }

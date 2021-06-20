@@ -101,7 +101,7 @@ int main(){
 	ann_train(network,input, output);
 	FILE* DATA =  fopen("output.txt","w");
 	fprintf(DATA,"# - data\n");
-	for(double i =a0;i<aN;i+=1.0/64){ 
+	for(double i =a0;i<aN;i+=1.0/72){ 
 		double predicted_output = ann_response(network, i);
 		fprintf(DATA,"%g %g \n",i,predicted_output);
 	}

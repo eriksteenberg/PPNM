@@ -1,0 +1,13 @@
+\
+set terminal png;\
+set output "plot.png";\
+set key top left;\
+set tics out;\
+set xlabel "x";\
+set ylabel "y";\
+set title "plot of the lowest eigenfunctions";\
+plot \
+"eigen.txt" index 0 using 1:2 with line title "0th order"\
+,"eigen.txt" index 1 using 1:2 with line title "1th order"\
+,"eigen.txt" index 2 using 1:2 with line title "2nd order"\
+

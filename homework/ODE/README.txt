@@ -1,1 +1,1 @@
-flyt lige den der Newton opgave ind her
+PArt C is in the myfun folder.

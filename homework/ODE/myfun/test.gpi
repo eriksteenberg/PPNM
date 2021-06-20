@@ -1,0 +1,13 @@
+\
+set terminal png;\
+set output "test.png";\
+set key top left;\
+set tics out;\
+set xlabel "x";\
+set ylabel "y";\
+set title "gravity is cool";\
+plot \
+"result.txt" index 0 using 1:2 with line title "planet 1"\
+,"result.txt" index 0 using 3:4 with line title "planet 2"\
+,"result.txt" index 0 using 5:6 with line title "planet 3"\
+

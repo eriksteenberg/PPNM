@@ -3,9 +3,9 @@ CFLAGS =  -O1 -std=gnu11 #-Wall
 CFLAGS += $(shell /usr/bin/gsl-config --cflags)
 LDLIBS += $(shell /usr/bin/gsl-config --libs)
 
-default: result.txt pyxplot.png plot.txt
+default: result.txt Higgs.png plot.txt
 
-pyxplot.png: data.txt plot.txt #data.txt #Makefile
+Higgs.png: data.txt plot.txt #data.txt #Makefile
 	echo '\
 	set terminal png;\
 	set key top right ;\

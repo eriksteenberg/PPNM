@@ -8,7 +8,7 @@
 #include<stdio.h>
 #define rnd (double)rand()/RAND_MAX
 
-//I've removed and added functiosn to this functions.c folder, My goal to to create one great functions folder, bu sometimes I remove functions that Arent relevant In a desperate attempt to make my code work
+//I've removed and added functions to this functions.c folder, My goal to to create one great functions folder, bu sometimes I remove functions that Arent relevant In a desperate attempt to make my code work
 
 double norm(double x){
 	double result = sqrt(pow(x,2));
@@ -22,7 +22,7 @@ void show_matrix(gsl_matrix* A){
 	for(int i=0;i<n;i++){
 		for(int j=0;j<m;j++){
 			double x = gsl_matrix_get(A,i,j);
-				if(norm(x)<10e-10){	// I added this part because seeing 10-16 5 times, hurts my eyes
+				if(norm(x)<10e-20){	// I added this part because seeing 10-16 5 times, hurts my eyes
 					printf("%9i ",0);
 				}
 				else{

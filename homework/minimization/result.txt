@@ -46,6 +46,7 @@ After having used the method, our parameters are
 
 
 Where:
-mass is 125.972188
-width is 2.08632867
+The mass is 125.972188
+The width of the resonance is 2.08632867
+The scaling-factor is 9.87620578
 

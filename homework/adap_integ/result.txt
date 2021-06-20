@@ -1,2 +1,0 @@
-The result of the adaptive integration of sqrt(x) is 0.666667
- and for 4*sqrt(1-x**2) it is 3.14159
