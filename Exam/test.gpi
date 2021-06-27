@@ -1,0 +1,14 @@
+\
+set terminal png;\
+set output "timeplot.png";\
+set key top left;\
+set tics out;\
+set xlabel "N - dimension of matrices";\
+set ylabel "time";\
+set title "Time usage of n-sized matrices";\
+f(x) = c1*(x**2);\
+fit f() withouterrors "time.txt" using 1:2 via c1;\
+plot \
+"time.txt" using 1:2 with points title "data"\
+,f(x) with color blue lines title r"fit of $cN^2$ "\
+

@@ -195,7 +195,7 @@ void newton(void f(gsl_vector* x,gsl_vector* fx), gsl_vector* x,double eps){
 	gsl_vector* lfx = gsl_vector_alloc(n);
 	//f(x,fx);
 	int N = 0;
-	while (2){//N<10000){
+	while (N<10000){
 		f(x,fx);
 //void jacobi(gsl_vector* x, void f(gsl_vector* xlist, gsl_vector* flist, gsl_vector* d, gsl_vector* u, int p), gsl_vector* d, gsl_vector* u, int p,gsl_matrix* Jac){
 		jacobi(x,f,jac);
@@ -230,8 +230,8 @@ void newton(void f(gsl_vector* x,gsl_vector* fx), gsl_vector* x,double eps){
 
 void gradient(double f(gsl_vector* xvector),gsl_vector* x,gsl_vector* grad){
 	int n = x->size;
-	double dx = sqrt(DELTA);
 	double fdx = 0;
+	double dx = sqrt(DELTA);
 	double fx = 0;
 	double xi = 0;
 	double gradi =0;

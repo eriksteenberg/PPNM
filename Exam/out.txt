@@ -1,6 +1,50 @@
+We demontrate my implimentation of the Symmetric row/column update for a 5x5-matrix 
+The diagonal matrix is
 
-Here we go again i=2
+     0.84         0         0         0         0 
+        0     0.798         0         0         0 
+        0         0     0.335         0         0 
+        0         0         0     0.554         0 
+        0         0         0         0     0.365 
 
-Here we go again i=21
+e(p)=e(2) and the update vector is 
 
-Here we go again i=12
+0.783099
+0.197551
+0
+0.628871
+0.95223
+
+Now we test my row/coloum update implimentation, or the eigen value calcualtor as I've called it, on the randomly generated matrix.
+The function takes a diagonal matrix, an update vector, a vector to store the eigenvalues and an int p-value and then returns solutions to the eigenvalue equation (4.30) in the storing vector.
+The update Matrix
+
+     0.84         0     0.783         0         0 
+        0     0.798     0.198         0         0 
+    0.783     0.198     0.335     0.629     0.952 
+        0         0     0.629     0.554         0 
+        0         0     0.952         0     0.365 
+
+
+The list of of values that eigen value calculator returned
+
+1.87002
+0.704377
+0.704377
+-0.967045
+0.704377
+
+We then pluck these values into eq. 4.30, just to check
+The vector of the sums with the calculated eigenvalues
+
+2.91894e-10
+2.66454e-15
+2.66454e-15
+4.88498e-15
+2.66454e-15
+
+Comment here
+As the reader can see some of the given values are the same, this is not neccessarily calls for concern. There are two reasons for this.
+#1: It is not a garuantee that the equation used to calculate the eigenvalues gives all the possible eigenvalue.
+As a clear example of this, the equation does not work for diagonal equations, where the update vector is zero, as it only has one solution. THus it is reasonable to assume that not all eigenvalues are covered by this equation.
+#2:THe function that I used to solve the eigenvalue equation is my implimentation of the newton method for functions of vectors. Unfortunately this function appears to be biased towards values in the vacinity of the initial guess. THis is why the initial guess for the eigenvalues are randonly genereate, so as to avoid only getting the same eigenvalue in all the solutions.
