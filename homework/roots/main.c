@@ -5,7 +5,6 @@
 #include<gsl/gsl_blas.h>
 #include<gsl/gsl_matrix.h>
 #include<math.h>
-#include<gsl/gsl_blas.h>
 #include<assert.h>
 #include<gsl/gsl_linalg.h>
 #define RND (double)rand()/RAND_MAX

@@ -35,6 +35,7 @@ double subclenshaw(double f(double),double a, double b, double delta, double eps
 		return subclenshaw(f,a,(a+b)/2,delta/sqrt(2),epsilon,number+1) + subclenshaw(f,(a+b)/2,b,delta/sqrt(2),epsilon,number+1);
 	}
 }
+
 double clenshaw(double f(double),double a,double b, double delta, double eps){
 	A=a;B=b;a=0;b=M_PI;
 	int number = 0;
@@ -79,7 +80,7 @@ int main(){
 	printf("The result of the adaptive integration of 4*sqrt(1-x**2) is %.10g\n",res1);
 	calls=0;
 	double res2 = clenshaw(func4,a,b,tol,eps);
-	printf("The clenshaw integration of 1/sqrt(x) is %.10g. The number of integrand evaluations is %i\n",res2,calls);
+	printf("\n\n\nThe clenshaw integration of 1/sqrt(x) is %.10g. The number of integrand evaluations is %i\n",res2,calls);
 	calls=0;
 	double res3 = clenshaw(func5,a,b,tol,eps);
 	printf("The clenshaw integration of ln(x)/sqrt(x) is %.10g. The number of integrand evaluations is %i\n",res3,calls);

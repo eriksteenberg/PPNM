@@ -1,6 +1,9 @@
 The absolute accuracy is 0.0001 amd the relative accuracy is 0.0001
 The result of the adaptive integration of sqrt(x) is 0.6666809329
 The result of the adaptive integration of 4*sqrt(1-x**2) is 3.141597508
+
+
+
 The clenshaw integration of 1/sqrt(x) is 1.999999502. The number of integrand evaluations is 60
 The clenshaw integration of ln(x)/sqrt(x) is -3.999994684. The number of integrand evaluations is 396
 The clenshaw integration of 4*sqrt(1-x**2) is 3.141592289. The number of integrand evaluations is 180

@@ -35,4 +35,4 @@ functions.o: functions.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	$(RM) *.o main Results.txt plot.txt *.png
+	$(RM) *.o main result.txt plot.txt *.png

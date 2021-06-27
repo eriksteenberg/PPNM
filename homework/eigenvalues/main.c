@@ -13,17 +13,17 @@
 
 int main(){
 	printf("Part A of this exercise, involves creating a \njacobian diagonalization opeartor and checking that VTV = 1,\nVTAV=D and VDVT =A\nAll of which is shown below\n");
-	int n=3;
-	gsl_matrix* A = gsl_matrix_alloc(n,n);
-	gsl_matrix* V = gsl_matrix_alloc(n,n);
-	gsl_matrix* res0 = gsl_matrix_alloc(n,n);
-	gsl_matrix* res1 = gsl_matrix_alloc(n,n);
-	gsl_matrix* res2 = gsl_matrix_alloc(n,n);
-	gsl_matrix* D = gsl_matrix_alloc(n,n);
+	int n=5;
+	gsl_matrix* A = gsl_matrix_calloc(n,n);
+	gsl_matrix* V = gsl_matrix_calloc(n,n);
+	gsl_matrix* res0 = gsl_matrix_calloc(n,n);
+	gsl_matrix* res1 = gsl_matrix_calloc(n,n);
+	gsl_matrix* res2 = gsl_matrix_calloc(n,n);
+	gsl_matrix* D = gsl_matrix_calloc(n,n);
 	gsl_matrix_set_identity(V); //seeting the Idnetity matrix
 	//generating random matrix, that is equal to ints own transpose
 	for(int i=0;i<n;i++){
-		for(int j=0;j<n;j++){
+	/*	for(int j=0;j<n;j++){
 			if(i==j){
 				gsl_matrix_set(A,i,j,rnd);
 			}
@@ -33,6 +33,8 @@ int main(){
 				gsl_matrix_set(A,j,i,x);
 			}
 		}
+	*/
+		gsl_matrix_set(A,i,i,rnd);
 	}
 	printf("before jacobi, A is\n");
 	show_matrix(A);
