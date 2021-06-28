@@ -1,50 +1,68 @@
-We demontrate my implimentation of the Symmetric row/column update for a 5x5-matrix 
+We demonstrate my implimentation of the Symmetric row/column update for a 4x4-matrix 
 The diagonal matrix is
 
-     0.84         0         0         0         0 
-        0     0.798         0         0         0 
-        0         0     0.335         0         0 
-        0         0         0     0.554         0 
-        0         0         0         0     0.365 
+     0.84         0         0         0 
+        0     0.783         0         0 
+        0         0     0.912         0 
+        0         0         0     0.335 
 
-e(p)=e(2) and the update vector is 
+e(p)=e(2), note that since gsl vectors start at zero the p entry is entry number 3 and the update vector is 
 
-0.783099
+0.394383
+0.79844
 0.197551
-0
-0.628871
-0.95223
+0.76823
 
-Now we test my row/coloum update implimentation, or the eigen value calcualtor as I've called it, on the randomly generated matrix.
+Now we test my row/coloum update implimentation, or specifically the secular equation (eq. 4.30 in the book), on a randomly generated matrix.
 The function takes a diagonal matrix, an update vector, a vector to store the eigenvalues and an int p-value and then returns solutions to the eigenvalue equation (4.30) in the storing vector.
-The update Matrix
+The updated Matrix
 
-     0.84         0     0.783         0         0 
-        0     0.798     0.198         0         0 
-    0.783     0.198     0.335     0.629     0.952 
-        0         0     0.629     0.554         0 
-        0         0     0.952         0     0.365 
+     0.84         0     0.394         0 
+        0     0.783     0.798         0 
+    0.394     0.798      1.31     0.768 
+        0         0     0.768     0.335 
 
 
 The list of of values that eigen value calculator returned
 
-1.87002
-0.704377
-0.704377
--0.967045
-0.704377
+-0.315362
+0.558533
+2.19209
+2.19209
 
 We then pluck these values into eq. 4.30, just to check
 The vector of the sums with the calculated eigenvalues
 
-2.91894e-10
-2.66454e-15
-2.66454e-15
-4.88498e-15
-2.66454e-15
+2.22045e-16
+1.33227e-15
+-2.81897e-12
+-1.66533e-16
 
 Comment here
-As the reader can see some of the given values are the same, this is not neccessarily calls for concern. There are two reasons for this.
-#1: It is not a garuantee that the equation used to calculate the eigenvalues gives all the possible eigenvalue.
-As a clear example of this, the equation does not work for diagonal equations, where the update vector is zero, as it only has one solution. THus it is reasonable to assume that not all eigenvalues are covered by this equation.
-#2:THe function that I used to solve the eigenvalue equation is my implimentation of the newton method for functions of vectors. Unfortunately this function appears to be biased towards values in the vacinity of the initial guess. THis is why the initial guess for the eigenvalues are randonly genereate, so as to avoid only getting the same eigenvalue in all the solutions.
+As the reader can see some of the given values are the same, there are reasons for this.
+(The main error) The function that I used to solve the secular equation is my implimentation of the Newton root method for functions of vectors.
+Unfortunately the Newton method focuses on the imidiate vaccinity of the initial guess and not all possible values.
+This is why the initial guess for the eigenvalues are randomly generated the way that they are,
+it is an attempt to avoid only getting one eigenvalue in all the solutions.
+Of cause this also means that there is a chance that some eigenvalues are not found, which is quit unfortunate.
+To illustrate my point about the newton method and compare wiht another approach, we apply the jaocobi diagonalization
+
+        0         0         0         0 
+        0     0.559         0         0 
+        0         0      0.83         0 
+        0         0         0      2.19 
+
+The values on the diagonal are the eigenvalues, calculated using the jacobi method.
+To illustrate that we get better results if we make a really good initial guess, we pick these diagonal values as the initial guess for the eigenvalue calculator equation and see what happens.
+This is the calculated eigenvalues when the initial guess for the eigenvalues are the eigenvalues calculated using the Jacobi diagonalization.
+
+-0.315362
+0.558533
+0.829997
+2.19209
+
+As we can see it agrees with the Jacobi methode.
+Please note however that at the eigenvalue zero,corrospoding to the null vector, a non zero value is given.
+Two things, first I belive that is is because the eigenvalue calculator was not designed with the goal of finding zero valued eigenvalues in mind.
+Whether this is actually an eigenvalue I cannot say, but it solves the eigenvalue equation so it should be.
+From this, we can conclude that my implimentation works and the reason that it doesn't find all the eigenvalues is because of how my implentation of the Newton method treats the initial value and that the eigenvalue equation is not meant to be solved for eigenvalues=0.

@@ -151,16 +151,16 @@ void jac_special(double f(gsl_vector* x),gsl_vector* x, gsl_matrix* jac){
 }
 
 
-void jacobi(gsl_vector* x, void f(gsl_vector* xlist, gsl_vector* flist, gsl_vector* d, gsl_vector* u, int p), gsl_vector* d, gsl_vector* u, int p,gsl_matrix* Jac){
+void jacobi(gsl_vector* x, void f(gsl_vector* xlist, gsl_vector* flist),gsl_matrix* Jac){
 	int n = x->size;
 	gsl_vector* dflist = gsl_vector_alloc(n);
 	gsl_vector* fx = gsl_vector_alloc(n);
-	double dx = 0.0001;
-	f(x,fx,d,u,p);
+	double dx = sqrt(DELTA);
+	f(x,fx);
 	for (int i = 0; i < n; i++){
 		double xi = gsl_vector_get(x,i);
 		gsl_vector_set(x,i,xi + dx);
-		f(x,dflist,d,u,p);
+		f(x,dflist);
 		//gsl_vector_axpby(1,fx,-1,dflist);
 		//i TRIED CALCULATING  df-f this way first, but my pc war being annoying at the time
 		gsl_vector_sub(dflist,fx);
@@ -185,7 +185,7 @@ void GS_calculate(gsl_matrix* A, gsl_vector* b, gsl_vector* x){
 
 // ---------- This is the function I use to find the eigenvalues --------------- 
 
-void newton(void f(gsl_vector* x,gsl_vector* fx,gsl_vector* d, gsl_vector* u, int p), gsl_vector* x,gsl_vector* d, gsl_vector* u, int p, double eps){ 
+void newton(void f(gsl_vector* x,gsl_vector* fx), gsl_vector* x,double eps){ 
 	//for functions that takes a vector and returns a vector
 	int n= x->size;
 	gsl_matrix* jac = gsl_matrix_alloc(n,n);
@@ -195,10 +195,10 @@ void newton(void f(gsl_vector* x,gsl_vector* fx,gsl_vector* d, gsl_vector* u, in
 	gsl_vector* lfx = gsl_vector_alloc(n);
 	//f(x,fx);
 	int N = 0;
-	while (2){//N<10000){
-		f(x,fx,d,u,p);
+	while (N<10000){
+		f(x,fx);
 //void jacobi(gsl_vector* x, void f(gsl_vector* xlist, gsl_vector* flist, gsl_vector* d, gsl_vector* u, int p), gsl_vector* d, gsl_vector* u, int p,gsl_matrix* Jac){
-		jacobi(x,f,d,u,p,jac);
+		jacobi(x,f,jac);
 		gsl_vector_scale(fx,-1);
 		GS_calculate(jac,fx,dx);
 		N++;
@@ -206,18 +206,18 @@ void newton(void f(gsl_vector* x,gsl_vector* fx,gsl_vector* d, gsl_vector* u, in
 		while(1){	
 			lambda *=0.5;
 			gsl_vector_scale(dx,lambda);
-			f(x,fx,d,u,p);
+			f(x,fx);
 			double norm_fx = gsl_blas_dnrm2(fx);
 			gsl_vector_add(x,dx);
 			//f(x+l*dx)
-			f(x,lfx,d,u,p);
+			f(x,lfx);
 			double norm_lfx = gsl_blas_dnrm2(lfx);
 			if(norm_lfx<(1-0.5*lambda)*norm_fx){//f(x+dx)>c*f(x)
 			       break;}
 			if(lambda>0.015625){
 				break;}	
 		}
-		f(x,fx,d,u,p);
+		f(x,fx);
 		if(gsl_blas_dnrm2(fx)<eps){
 			break;}
 	}
@@ -230,8 +230,8 @@ void newton(void f(gsl_vector* x,gsl_vector* fx,gsl_vector* d, gsl_vector* u, in
 
 void gradient(double f(gsl_vector* xvector),gsl_vector* x,gsl_vector* grad){
 	int n = x->size;
-	double dx = sqrt(DELTA);
 	double fdx = 0;
+	double dx = sqrt(DELTA);
 	double fx = 0;
 	double xi = 0;
 	double gradi =0;

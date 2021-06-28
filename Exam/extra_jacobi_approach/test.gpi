@@ -5,10 +5,10 @@ set key top left;\
 set tics out;\
 set xlabel r"$N-$dimension of matrices";\
 set ylabel r"Time$[s]$";\
-set title r"Time usage of $N-$sized matrices";\
+set title r"Time usage of $N-$sized matrices eigenvalue calculation using rank-2 updates with jacobi diagonalization";\
 f(x) = c0 + c1*x + c2*(x**2);\
 fit f() withouterrors "time.txt" using 1:2 via c0,c1,c2;\
 plot \
 "time.txt" using 1:2 with points title "data"\
-,f(x) with color blue lines title r"fit of $c_0+c_1*N + c_2*N^2$ "\
+,f(x) with color blue lines title r"fit of $c_0 + c_1*N + c_2*N^2$ "\
 

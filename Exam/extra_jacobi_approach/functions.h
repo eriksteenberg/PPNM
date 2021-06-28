@@ -23,14 +23,14 @@ void transposed_multi(gsl_matrix* A, gsl_matrix* result);
 
 void lsfit(int m, double f(int i, double x), gsl_vector* x, gsl_vector* y,gsl_vector* dy,gsl_vector* c, gsl_matrix* S);
 
-void jacobi(gsl_vector* x, void f(gsl_vector* xlist, gsl_vector* flist,gsl_vector* d, gsl_vector* u, int p),gsl_vector* d, gsl_vector* u, int p,gsl_matrix* Jac);
+void jacobi(gsl_vector* x, void f(gsl_vector* xlist, gsl_vector* flist),gsl_matrix* Jac);
 
 void GS_calculate(gsl_matrix* A, gsl_vector* b, gsl_vector* x);
 
 void jac_special(double f(gsl_vector* x),gsl_vector* x, gsl_matrix* jac);
 
 //void newton(void f(gsl_vector* x,gsl_vector* fx), gsl_vector* x, double eps);
-void newton(void f(gsl_vector* x,gsl_vector* fx,gsl_vector* d, gsl_vector* u, int p),gsl_vector* d, gsl_vector* u, int p, gsl_vector* x, double eps); 
+void newton(void f(gsl_vector* x,gsl_vector* fx), gsl_vector* x, double eps); 
 
 void quasinewton(double f(gsl_vector* xvector),gsl_vector* x, double eps,int steps);
 

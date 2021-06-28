@@ -29,31 +29,36 @@ void sum(gsl_vector* lambda,gsl_vector* eigen){
 			sum+=uk2;}
 		gsl_vector_set(eigen,i,sum);}
 }
-
 void eigen(gsl_matrix* A, gsl_vector* x,int p,gsl_vector* u){
 	int n = A->size1;
-	gsl_vector* e = gsl_vector_calloc(n); //e(p)
-	gsl_vector_set(e,p,1);
-	gsl_blas_dger(1,e,u,A); //updating the diagonal matrix
+	gsl_matrix* D = gsl_matrix_calloc(n,n);
+        gsl_matrix* V = gsl_matrix_calloc(n,n);
+	gsl_vector* e = gsl_vector_calloc(n);
+        gsl_vector_set(e,p,1);
+ 	gsl_blas_dger(1,e,u,A);
 	gsl_blas_dger(1,u,e,A);
+        gsl_matrix_set_identity(V);
+        gsl_matrix_memcpy(D,A);
+        jacobi_diag(D,V);
 	for(int i=0;i<n;i++){
-		gsl_vector_set(x,i,0.5*i);
+		gsl_vector_set(x,i,gsl_matrix_get(D,i,i));//10*rnd);
 	}
-	newton(sum,x,1e-9);
+	newton(sum,x,1e-3);
+	gsl_matrix_free(D);
+	gsl_matrix_free(V);
 	gsl_vector_free(e);
 }
 static int n;
 
-//This method allows us to calculate the needed time.
 void timeFile(void){
+	//Creating object
 	struct timeval start, end;
 	double runtime;
-
 	gsl_matrix* A = gsl_matrix_calloc(n,n);
 	u = gsl_vector_calloc(n);
 	gsl_vector* x = gsl_vector_calloc(n);
 	d = gsl_vector_calloc(n);
-
+	gsl_vector* e = gsl_vector_calloc(n);
 	double dpi =0;
 	for(int i =0;i<n;i++){
 		dpi =rnd;
@@ -61,6 +66,7 @@ void timeFile(void){
 		gsl_vector_set(d,i,dpi);
 		gsl_vector_set(u,i,rnd);
 		}
+	gsl_vector_set(u,p,0);
 	gettimeofday(&start, NULL);
 	eigen(A,x,p,u);
 	gettimeofday(&end, NULL);
@@ -70,12 +76,10 @@ void timeFile(void){
    	gsl_vector_free(u);
 	gsl_matrix_free(A);
 	gsl_vector_free(x);
+	gsl_vector_free(e);
 	}
 
 int main(int arg, char** argv){
-	// the n value is taken and to have a bit of 
-	//variety i p it is calculated from n
-
         n = (int)atof(argv[1]);
 	if(n%2==0){p = (int)n*0.5;}
 	else{p = (int)(1.+n)*0.5;}

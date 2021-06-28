@@ -9,6 +9,10 @@
 #define rnd (double)rand()/RAND_MAX
 static const double DELTA = 2.22045e-16;
 
+//This is a list of functions that I have created throughout the course. I don't use them all in the exam project but, things like
+//the newton root function, the jacobi diagonalization and show_vector/matrix can be found here.
+
+
 void show_matrix(gsl_matrix* A){
 	int n = A->size1; 
 	int m = A->size2; 
@@ -155,14 +159,12 @@ void jacobi(gsl_vector* x, void f(gsl_vector* xlist, gsl_vector* flist),gsl_matr
 	int n = x->size;
 	gsl_vector* dflist = gsl_vector_alloc(n);
 	gsl_vector* fx = gsl_vector_alloc(n);
-	double dx = 0.0001;
+	double dx = 1e-10;
 	f(x,fx);
 	for (int i = 0; i < n; i++){
 		double xi = gsl_vector_get(x,i);
 		gsl_vector_set(x,i,xi + dx);
 		f(x,dflist);
-		//gsl_vector_axpby(1,fx,-1,dflist);
-		//i TRIED CALCULATING  df-f this way first, but my pc war being annoying at the time
 		gsl_vector_sub(dflist,fx);
 		gsl_vector_set(x,i,xi);
       		gsl_vector_scale(dflist,1/dx);
@@ -197,7 +199,6 @@ void newton(void f(gsl_vector* x,gsl_vector* fx), gsl_vector* x,double eps){
 	int N = 0;
 	while (N<10000){
 		f(x,fx);
-//void jacobi(gsl_vector* x, void f(gsl_vector* xlist, gsl_vector* flist, gsl_vector* d, gsl_vector* u, int p), gsl_vector* d, gsl_vector* u, int p,gsl_matrix* Jac){
 		jacobi(x,f,jac);
 		gsl_vector_scale(fx,-1);
 		GS_calculate(jac,fx,dx);
@@ -389,49 +390,3 @@ void jacobi_diag(gsl_matrix* A, gsl_matrix* V){
 	}while(changed!=0);
 }
 
-
-/*void newton(
-	void f(gsl_vector* x,gsl_vector* fx), gsl_vector* x, double eps)
-{
-	int n=x->size, steps=0;
-	gsl_matrix* J  = gsl_matrix_calloc(n,n);
-	gsl_matrix* R  = gsl_matrix_calloc(n,n);
-	gsl_vector* fx = gsl_vector_calloc(n);
-	gsl_vector* z  = gsl_vector_calloc(n);
-	gsl_vector* fz = gsl_vector_calloc(n);
-	gsl_vector* df = gsl_vector_calloc(n);
-	gsl_vector* Dx = gsl_vector_calloc(n);
-	while(steps<10000){
-		f(x,fx);
-		for (int j=0;j<n;j++){ 
-			double xj=gsl_vector_get(x,j);
-			gsl_vector_set(x,j,xj+DELTA);
-			f(x,df);
-			gsl_vector_sub(df,fx); 
-			for(int i=0;i<n;i++)
-				gsl_matrix_set(J,i,j,gsl_vector_get(df,i)/DELTA);
-			gsl_vector_set(x,j,xj);
-			}
-		GS_decomp(J,R);
-		GS_solve(J,R,fx,Dx);
-		gsl_vector_scale(Dx,-1);
-		double s=1;
-		while(s>1./64){
-			gsl_vector_memcpy(z,x);
-			gsl_vector_add(z,Dx);
-			f(z,fz);
-			if( gsl_blas_dnrm2(fz)<(1-s/2)*gsl_blas_dnrm2(fx)) break;
-			s*=0.5;
-			gsl_vector_scale(Dx,0.5);
-			}
-		gsl_vector_memcpy(x,z);
-		gsl_vector_memcpy(fx,fz);
-		if( gsl_blas_dnrm2(Dx)<DELTA || gsl_blas_dnrm2(fx)<eps ) break;
-		steps++; } //while
-	gsl_matrix_free(J);
-	gsl_vector_free(fx);
-	gsl_vector_free(z);
-	gsl_vector_free(fz);
-	gsl_vector_free(df);
-	gsl_vector_free(Dx);
-}*/
