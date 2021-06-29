@@ -12,7 +12,7 @@
 
 
 int main(){
-	printf("Part A of this exercise, involves creating a \njacobian diagonalization opeartor and checking that VTV = 1,\nVTAV=D and VDVT =A\nAll of which is shown below\n");
+	printf("Part A of this exercise, involves creating a \njacobian diagonalization operator and checking that VTV = 1,\nVTAV=D and VDVT =A\nAll of which is shown below\n");
 	int n=5;
 	gsl_matrix* A = gsl_matrix_calloc(n,n);
 	gsl_matrix* V = gsl_matrix_calloc(n,n);
