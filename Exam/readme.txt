@@ -26,6 +26,4 @@ I have made a lengthy comment on my crtiques of my function and my Newton root f
 
 
 Extra:
-In the folder I have made a plot how how long the eigen function takes dependent on the
-dimension of the matrix, but with the twist that the initial guess' for the eigenvalues
-ar ethe eigenvalues calculated using the jacobi diagonalization.
+In the folder, I have made a plot how how long the eigenfunction takes depending on the dimension of the matrix, but with the twist that the initial guess' for the eigenvalues are the eigenvalues calculated using the jacobi diagonalization.
